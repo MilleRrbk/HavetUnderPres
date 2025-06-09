@@ -1,13 +1,12 @@
-using UnityEngine;
 
 public class ProximityLoader : MonoBehaviour
 {
-    public Transform player;        // Spilleren eller kameraets position
-    public float loadRadius = 5f;  // Hvor tæt modellen skal være for at blive aktiveret
+    public Transform vrCamera;       // Hovedets position (Camera)
+    public float loadRadius = 50f;   // Afstand hvor objekt aktiveres
 
     void Update()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
+        float distance = Vector3.Distance(transform.position, vrCamera.position);
 
         if (distance <= loadRadius)
         {
