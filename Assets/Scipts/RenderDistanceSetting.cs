@@ -3,7 +3,7 @@ using UnityEngine;
 public class ProximityLoader : MonoBehaviour
 {
     public Transform player;        // Spilleren eller kameraets position
-    public float loadRadius = 50f;  // Hvor tæt modellen skal være for at blive aktiveret
+    public float loadRadius = 5f;  // Hvor tæt modellen skal være for at blive aktiveret
 
     void Update()
     {
