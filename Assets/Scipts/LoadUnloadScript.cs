@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    public string nextSceneName;
-    public string previousSceneName;
+    public string nutidsScene;
+    public string FortidsScene;
 
     private void OnTriggerEnter(Collider other)
     {
