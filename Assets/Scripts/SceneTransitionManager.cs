@@ -7,25 +7,29 @@ public class SceneTransitionManager : MonoBehaviour
     [System.Serializable]
     public class FogSettings
     {
-        public Color fogColor;
-        public float fogDensity;
+        public Color fogColor = Color.gray;
+        public float fogDensity = 0.01f;
     }
 
     public FogSettings fortidsFog;
     public FogSettings nutidsFog;
     public FogSettings fremtidsFog;
 
-    private string currentSceneName = "FortidsScene";
+    private string currentScene = "FortidsScene";
 
-    void Start()
+    private void Start()
     {
         RenderSettings.fog = true;
         ApplyFogSettings(fortidsFog);
-        SceneManager.LoadSceneAsync("FortidsScene", LoadSceneMode.Additive);
+
+        // Load first scene additively and wait for it to finish
+        SceneManager.LoadSceneAsync(currentScene, LoadSceneMode.Additive).completed += (op) =>
+        {
+            Debug.Log($"✅ {currentScene} successfully loaded.");
+            AlignXRRigToSceneOrigin();
+        };
     }
 
-
-    // Kald denne fra en trigger fx
     public void LoadNextScene()
     {
         StartCoroutine(TransitionToNextScene());
@@ -33,47 +37,36 @@ public class SceneTransitionManager : MonoBehaviour
 
     private IEnumerator TransitionToNextScene()
     {
-        // Fog fade in (increase density)
-        yield return StartCoroutine(FogFade(0f, 0.1f, 1f)); // fade til en neutral fade density for overgang
+        yield return StartCoroutine(FogFade(RenderSettings.fogDensity, 0.1f, 1f));
 
-        string nextScene = GetNextSceneName(currentSceneName);
-
+        string nextScene = GetNextScene(currentScene);
         if (string.IsNullOrEmpty(nextScene))
         {
-            Debug.Log("Ingen flere scener!");
+            Debug.Log("Ingen flere scener.");
             yield break;
         }
 
-        // Load next scene additive
-        AsyncOperation loadOp = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
-        while (!loadOp.isDone)
-            yield return null;
+        yield return SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
+        yield return SceneManager.UnloadSceneAsync(currentScene);
 
-        // Unload current scene
-        AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(currentSceneName);
-        while (!unloadOp.isDone)
-            yield return null;
+        currentScene = nextScene;
+        ApplyFogSettings(GetFogForScene(currentScene));
 
-        currentSceneName = nextScene;
+        yield return StartCoroutine(FogFade(0.1f, RenderSettings.fogDensity, 1f));
 
-        // Apply fog settings for new scene
-        FogSettings fogSettings = GetFogSettingsForScene(currentSceneName);
-        ApplyFogSettings(fogSettings);
-
-        // Fog fade out (reduce density)
-        yield return StartCoroutine(FogFade(0.1f, fogSettings.fogDensity, 1f));
+        AlignXRRigToSceneOrigin();
     }
 
-    private IEnumerator FogFade(float startDensity, float endDensity, float duration)
+    private IEnumerator FogFade(float from, float to, float duration)
     {
-        float timer = 0f;
-        while (timer < duration)
+        float time = 0f;
+        while (time < duration)
         {
-            RenderSettings.fogDensity = Mathf.Lerp(startDensity, endDensity, timer / duration);
-            timer += Time.deltaTime;
+            RenderSettings.fogDensity = Mathf.Lerp(from, to, time / duration);
+            time += Time.deltaTime;
             yield return null;
         }
-        RenderSettings.fogDensity = endDensity;
+        RenderSettings.fogDensity = to;
     }
 
     private void ApplyFogSettings(FogSettings settings)
@@ -82,9 +75,9 @@ public class SceneTransitionManager : MonoBehaviour
         RenderSettings.fogDensity = settings.fogDensity;
     }
 
-    private string GetNextSceneName(string current)
+    private string GetNextScene(string scene)
     {
-        switch (current)
+        switch (scene)
         {
             case "FortidsScene": return "NutidsScene";
             case "NutidsScene": return "FremtidsScene";
@@ -92,15 +85,30 @@ public class SceneTransitionManager : MonoBehaviour
         }
     }
 
-    private FogSettings GetFogSettingsForScene(string sceneName)
+    private FogSettings GetFogForScene(string scene)
     {
-        switch (sceneName)
+        switch (scene)
         {
             case "FortidsScene": return fortidsFog;
             case "NutidsScene": return nutidsFog;
             case "FremtidsScene": return fremtidsFog;
-            default: return new FogSettings { fogColor = Color.gray, fogDensity = 0.01f };
+            default: return new FogSettings();
+        }
+    }
+
+    // ✅ New helper to reposition XR Rig
+    private void AlignXRRigToSceneOrigin()
+    {
+        GameObject xrRig = GameObject.Find("XR Origin");
+        if (xrRig != null)
+        {
+            // Adjust this position based on your FortidsScene's floor level
+            xrRig.transform.position = new Vector3(0, 1.6f, 0);
+            Debug.Log("🟢 XR Rig repositioned after scene load.");
+        }
+        else
+        {
+            Debug.LogWarning("⚠ XR Origin not found. Check name in hierarchy.");
         }
     }
 }
-
