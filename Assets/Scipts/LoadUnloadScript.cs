@@ -16,7 +16,7 @@ public class SceneLoader : MonoBehaviour
 
             // Unload previous scene
             if (!string.IsNullOrEmpty(previousSceneName))
-                SceneManager.UnloadSceneAsync(previousSceneName);
+                SceneManager.UnloadSce neAsync(previousSceneName);
         }
     }
 }
