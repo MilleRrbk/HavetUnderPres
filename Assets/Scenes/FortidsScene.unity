@@ -4775,6 +4775,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 249196619}
+  - component: {fileID: 249196620}
   m_Layer: 0
   m_Name: TriggerNextScene
   m_TagString: Untagged
@@ -4791,12 +4792,33 @@ Transform:
   m_GameObject: {fileID: 249196618}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.966793, y: -0, z: -39.8}
-  m_LocalScale: {x: 27.2, y: 5, z: 1}
+  m_LocalPosition: {x: -16.966793, y: 4.32, z: -33.2}
+  m_LocalScale: {x: 34.5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &249196620
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249196618}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.4, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &254397265
 GameObject:
   m_ObjectHideFlags: 0
@@ -35643,6 +35665,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6226694734089829650, guid: e8ffd0d7a5ab443a3a139a16e4ef5673, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 15071cdbaeff94cb6806735882d8d10d, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
