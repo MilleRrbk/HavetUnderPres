@@ -15,6 +15,9 @@ public class SceneTransitionManager : MonoBehaviour
     public FogSettings nutidsFog;
     public FogSettings fremtidsFog;
 
+    [Header("XR Rig Positioning")]
+    public Vector3 xrRigTargetPosition = new Vector3(0, 1.6f, 0); // 👈 You control this in the Inspector
+
     private string currentScene = "FortidsScene";
 
     private void Start()
@@ -22,11 +25,10 @@ public class SceneTransitionManager : MonoBehaviour
         RenderSettings.fog = true;
         ApplyFogSettings(fortidsFog);
 
-        // Load first scene additively and wait for it to finish
         SceneManager.LoadSceneAsync(currentScene, LoadSceneMode.Additive).completed += (op) =>
         {
             Debug.Log($"✅ {currentScene} successfully loaded.");
-            AlignXRRigToSceneOrigin();
+            AlignXRRigToInspectorPosition(); // 👈 use inspector-defined position
         };
     }
 
@@ -54,7 +56,7 @@ public class SceneTransitionManager : MonoBehaviour
 
         yield return StartCoroutine(FogFade(0.1f, RenderSettings.fogDensity, 1f));
 
-        AlignXRRigToSceneOrigin();
+        AlignXRRigToInspectorPosition(); // 👈 reposition XR rig again
     }
 
     private IEnumerator FogFade(float from, float to, float duration)
@@ -96,32 +98,19 @@ public class SceneTransitionManager : MonoBehaviour
         }
     }
 
-    // ✅ New helper to reposition XR Rig
-    private void AlignXRRigToSceneOrigin()
+    // ✅ This is the new inspector-based rig positioning
+    private void AlignXRRigToInspectorPosition()
     {
         GameObject xrRig = GameObject.Find("XR Origin");
         if (xrRig != null)
         {
-            Transform cameraOffset = xrRig.transform.Find("Camera Offset");
-
-            if (cameraOffset != null)
-            {
-                // Move the whole rig so the "Camera Offset" sits at world Y = 3
-                Vector3 headsetPos = cameraOffset.position;
-                float heightAdjustment = 3f - headsetPos.y;
-                xrRig.transform.position += new Vector3(0, heightAdjustment, 0);
-
-                Debug.Log($"🟢 XR Rig repositioned to Y = 3");
-            }
-            else
-            {
-                Debug.LogWarning("⚠ Could not find Camera Offset in XR Origin");
-            }
+            xrRig.transform.position = xrRigTargetPosition;
+            Debug.Log($"🟢 XR Rig moved to {xrRigTargetPosition}");
         }
         else
         {
             Debug.LogWarning("⚠ XR Origin not found in scene.");
         }
     }
-
 }
+
