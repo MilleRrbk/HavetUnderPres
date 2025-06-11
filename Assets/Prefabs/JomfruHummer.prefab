@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: JomfruHummer
       objectReference: {fileID: 0}
+    - target: {fileID: -3517377247423132689, guid: baac6e6827d2e4d51a9d34c6aa025145, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 8311642765551466071, guid: baac6e6827d2e4d51a9d34c6aa025145, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.52
