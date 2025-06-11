@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MasterScene.unity
+    path: Assets/Scenes/MainScene.unity
     guid: b3f966de6c6e64d5c9da12318896879b
   - enabled: 1
     path: Assets/Scenes/FortidsScene.unity
@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/NutidsScene.unity
     guid: dfa0bd3adcd364a18b5357503fb10108
   - enabled: 1
-    path: Assets/Scenes/FremtidScene.unity
+    path: Assets/Scenes/FremtidsScene.unity
     guid: 7f93b4c9106aa49fe82802a99a909595
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
