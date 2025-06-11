@@ -102,13 +102,26 @@ public class SceneTransitionManager : MonoBehaviour
         GameObject xrRig = GameObject.Find("XR Origin");
         if (xrRig != null)
         {
-            // Adjust this position based on your FortidsScene's floor level
-            xrRig.transform.position = new Vector3(0, 1.6f, 0);
-            Debug.Log("🟢 XR Rig repositioned after scene load.");
+            Transform cameraOffset = xrRig.transform.Find("Camera Offset");
+
+            if (cameraOffset != null)
+            {
+                // Move the whole rig so the "Camera Offset" sits at world Y = 3
+                Vector3 headsetPos = cameraOffset.position;
+                float heightAdjustment = 3f - headsetPos.y;
+                xrRig.transform.position += new Vector3(0, heightAdjustment, 0);
+
+                Debug.Log($"🟢 XR Rig repositioned to Y = 3");
+            }
+            else
+            {
+                Debug.LogWarning("⚠ Could not find Camera Offset in XR Origin");
+            }
         }
         else
         {
-            Debug.LogWarning("⚠ XR Origin not found. Check name in hierarchy.");
+            Debug.LogWarning("⚠ XR Origin not found in scene.");
         }
     }
+
 }
