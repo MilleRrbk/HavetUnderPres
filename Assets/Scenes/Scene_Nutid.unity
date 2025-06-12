@@ -1749,8 +1749,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableFog: 1
-  fogColor: {r: 0.22908506, g: 0.49056602, b: 0.36708894, a: 1}
-  fogDensity: 0.5
+  fogColor: {r: 0.21960784, g: 0.4862745, b: 0.39607844, a: 1}
+  fogDensity: 0.4
   fogMode: 2
   skyboxMaterial: {fileID: 2100000, guid: 021a0a35d3e07449a9ca73e0f267e600, type: 2}
 --- !u!4 &413281927
