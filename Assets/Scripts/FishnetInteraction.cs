@@ -14,7 +14,17 @@ public class FishnetInteraction : MonoBehaviour
     public float crabEscapeDistance = 5f;
 
     private int deadClickedCount = 0;
+    void Awake()
+    {
+        XRInteractionManager manager = FindObjectOfType<XRInteractionManager>();
 
+        foreach (var obj in deadObjects)
+        {
+            var interactable = obj.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable>();
+            if (interactable != null)
+                interactable.interactionManager = manager;
+        }
+    }
     void Start()
     {
         foreach (var obj in deadObjects)
@@ -96,3 +106,4 @@ public class FishnetInteraction : MonoBehaviour
         obj.SetActive(false);
     }
 }
+
