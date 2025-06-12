@@ -4,8 +4,8 @@ using System.Collections;
 
 public class SceneLoaderTriggerFoggy : MonoBehaviour
 {
-    [SerializeField] private string sceneToLoad;     // Next scene to load (e.g. "Scene_Nutid")
-    [SerializeField] private string sceneToUnload;   // Scene to unload (e.g. "Scene_Fortid")
+    [SerializeField] private string sceneToLoad;
+    [SerializeField] private string sceneToUnload;
 
     private bool hasTriggered = false;
 
@@ -14,51 +14,27 @@ public class SceneLoaderTriggerFoggy : MonoBehaviour
         if (!hasTriggered && other.CompareTag("Player"))
         {
             hasTriggered = true;
-            StartCoroutine(LoadSceneRoutine());
+            StartCoroutine(TransitionRoutine());
         }
     }
 
-    private IEnumerator LoadSceneRoutine()
+    private IEnumerator TransitionRoutine()
     {
-        Debug.Log("🔁 Loading scene: " + sceneToLoad);
-
-        // Load new scene additively
+        // Load the new scene
         AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
         while (!loadOp.isDone)
             yield return null;
 
-        // Set new scene as active
-        Scene newScene = SceneManager.GetSceneByName(sceneToLoad);
-        if (newScene.IsValid())
-            SceneManager.SetActiveScene(newScene);
-
-        // Apply fog settings from the newly loaded scene
-        ApplyFogFromScene(newScene);
-
-        // Optional short delay before unloading old scene
-        yield return new WaitForSeconds(0.2f);
-
-        // Unload the previous scene
+        // Optionally unload previous scene
         if (!string.IsNullOrEmpty(sceneToUnload) && SceneManager.GetSceneByName(sceneToUnload).isLoaded)
-        {
-            Debug.Log("🧹 Unloading scene: " + sceneToUnload);
-            AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(sceneToUnload);
-            while (!unloadOp.isDone)
-                yield return null;
-        }
-        else
-        {
-            Debug.LogWarning("⚠️ Could not unload: " + sceneToUnload);
-        }
+            SceneManager.UnloadSceneAsync(sceneToUnload);
 
-        Debug.Log("✅ Scene switch complete.");
-    }
-
-    private void ApplyFogFromScene(Scene targetScene)
-    {
-        foreach (GameObject obj in targetScene.GetRootGameObjects())
+        // Apply fog from the new scene manually
+        Scene activeScene = SceneManager.GetSceneByName(sceneToLoad);
+        GameObject[] roots = activeScene.GetRootGameObjects();
+        foreach (GameObject root in roots)
         {
-            SceneFogSettings fogSettings = obj.GetComponentInChildren<SceneFogSettings>();
+            SceneFogSettings fogSettings = root.GetComponentInChildren<SceneFogSettings>();
             if (fogSettings != null)
             {
                 fogSettings.ApplyNow();
