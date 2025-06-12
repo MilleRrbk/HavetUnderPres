@@ -31,7 +31,7 @@ public class SceneLoaderTriggerFoggy : MonoBehaviour
         // Start med kraftig tåge (illusion af rejse)
         RenderSettings.fog = true;
         RenderSettings.fogColor = Color.white;
-        RenderSettings.fogMode = FogMode.Exponential;
+      	RenderSettings.fogMode = FogMode.Exponential; // or Linear
         RenderSettings.fogDensity = initialFogDensity;
 
         // Load ny scene additivt

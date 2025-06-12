@@ -2163,6 +2163,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4703449919117841808, guid: b9eb27ab32fcf4a35a9a0bba08b7c194, type: 3}
   m_PrefabInstance: {fileID: 408399610}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &413281925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 413281927}
+  - component: {fileID: 413281926}
+  m_Layer: 0
+  m_Name: Fog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &413281926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413281925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8882956421a4c45ebbd72d66f63b89e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableFog: 1
+  fogColor: {r: 0.22908506, g: 0.49056602, b: 0.36708894, a: 1}
+  fogDensity: 0.2
+  fogMode: 2
+--- !u!4 &413281927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413281925}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.166375, y: -7.2239885, z: 76.83163}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &429441073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8354,7 +8402,7 @@ PrefabInstance:
     m_TransformParent: {fileID: 1882992286}
     m_Modifications:
     - target: {fileID: -7867290164230299627, guid: 3840fa85d54d745eb9f0ff915257e7e1, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
+      propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9736a60daa9f54a09b1bc3ec16b47e46, type: 2}
     - target: {fileID: -3736103955076234904, guid: 3840fa85d54d745eb9f0ff915257e7e1, type: 3}
@@ -8704,7 +8752,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5602850928678519603, guid: 57471ffaea86a4a038920fabf912a554, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
+      propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bac644310eff3400fa89afb861f7fce2, type: 2}
     - target: {fileID: 6207310858001635297, guid: 57471ffaea86a4a038920fabf912a554, type: 3}
@@ -10582,3 +10630,4 @@ SceneRoots:
   - {fileID: 1952270466}
   - {fileID: 1457023326}
   - {fileID: 935697171}
+  - {fileID: 413281927}

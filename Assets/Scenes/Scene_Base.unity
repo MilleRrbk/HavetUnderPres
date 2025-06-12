@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.41960785, g: 0.7019608, b: 0.57254905, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.3
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584350417}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fc2fca994c554a0c9b46b58ddf20359, type: 3}
   m_Name: 
@@ -603,7 +603,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3663100344084243197, guid: e8ffd0d7a5ab443a3a139a16e4ef5673, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.83
+      value: -0.9
       objectReference: {fileID: 0}
     - target: {fileID: 3663100344084243197, guid: e8ffd0d7a5ab443a3a139a16e4ef5673, type: 3}
       propertyPath: m_LocalPosition.z
@@ -611,23 +611,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3663100344084243197, guid: e8ffd0d7a5ab443a3a139a16e4ef5673, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.36153886
+      value: 0.36144418
       objectReference: {fileID: 0}
     - target: {fileID: 3663100344084243197, guid: e8ffd0d7a5ab443a3a139a16e4ef5673, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.36153886
+      value: -0.36163345
       objectReference: {fileID: 0}
     - target: {fileID: 3663100344084243197, guid: e8ffd0d7a5ab443a3a139a16e4ef5673, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6076921
+      value: -0.60785115
       objectReference: {fileID: 0}
     - target: {fileID: 3663100344084243197, guid: e8ffd0d7a5ab443a3a139a16e4ef5673, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.6076921
+      value: -0.607533
       objectReference: {fileID: 0}
     - target: {fileID: 3663100344084243197, guid: e8ffd0d7a5ab443a3a139a16e4ef5673, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: -90.03
       objectReference: {fileID: 0}
     - target: {fileID: 3663100344084243197, guid: e8ffd0d7a5ab443a3a139a16e4ef5673, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -675,7 +675,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960915834}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fc2fca994c554a0c9b46b58ddf20359, type: 3}
   m_Name: 
@@ -906,7 +906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.z
