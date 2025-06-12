@@ -5,7 +5,7 @@ public class LockYPosition : MonoBehaviour
 {
     [Header("Fikseret højde (Y)")]
     [Tooltip("Den faste Y-højde, XR Origin skal holdes på")]
-    public float fixedY = 0f;
+    public float fixedY = 2f;
 
     [Header("Debug")]
     public bool showDebugLogs = false;
@@ -14,7 +14,7 @@ public class LockYPosition : MonoBehaviour
     {
         Vector3 currentPosition = transform.position;
 
-        if (Mathf.Abs(currentPosition.y - fixedY) > 0.001f)
+        if (Mathf.Abs(currentPosition.y - fixedY) > 2.001f)
         {
             if (showDebugLogs)
                 Debug.Log($"[LockYPosition] Justerer Y fra {currentPosition.y:F2} til {fixedY:F2}");

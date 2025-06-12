@@ -8,17 +8,26 @@ public class SceneFogSettings : MonoBehaviour
     public float fogDensity = 0.02f;
     public FogMode fogMode = FogMode.Exponential;
 
+    [Header("Optional Skybox")]
+    public Material skyboxMaterial;
+
     public void ApplyNow()
     {
         RenderSettings.fog = enableFog;
-        RenderSettings.fogMode = fogMode;
         RenderSettings.fogColor = fogColor;
         RenderSettings.fogDensity = fogDensity;
+        RenderSettings.fogMode = fogMode;
+
+        if (skyboxMaterial != null)
+        {
+            RenderSettings.skybox = skyboxMaterial;
+            DynamicGI.UpdateEnvironment(); // Opdater lyset efter skyboxændring
+        }
     }
 
     void Start()
     {
-        ApplyNow(); // Apply when the scene starts as well
+        ApplyNow();
     }
 }
 

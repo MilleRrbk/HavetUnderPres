@@ -20,16 +20,16 @@ public class SceneLoaderTriggerFoggy : MonoBehaviour
 
     private IEnumerator TransitionRoutine()
     {
-        // Load the new scene
+        // Load the new scene additive
         AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
         while (!loadOp.isDone)
             yield return null;
 
-        // Optionally unload previous scene
+        // Unload the old scene if assigned and loaded
         if (!string.IsNullOrEmpty(sceneToUnload) && SceneManager.GetSceneByName(sceneToUnload).isLoaded)
             SceneManager.UnloadSceneAsync(sceneToUnload);
 
-        // Apply fog from the new scene manually
+        // Find SceneFogSettings in the newly loaded scene and apply fog & skybox
         Scene activeScene = SceneManager.GetSceneByName(sceneToLoad);
         GameObject[] roots = activeScene.GetRootGameObjects();
         foreach (GameObject root in roots)

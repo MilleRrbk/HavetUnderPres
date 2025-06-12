@@ -1752,6 +1752,7 @@ MonoBehaviour:
   fogColor: {r: 0.22908506, g: 0.49056602, b: 0.36708894, a: 1}
   fogDensity: 0.5
   fogMode: 2
+  skyboxMaterial: {fileID: 2100000, guid: 021a0a35d3e07449a9ca73e0f267e600, type: 2}
 --- !u!4 &413281927
 Transform:
   m_ObjectHideFlags: 0
@@ -4414,13 +4415,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: [{targetCorrespondingSourceObject: {fileID: 8940545440031876407, guid: b6ade579750144be181f357d78906565, type: 3}, insertIndex: -1, addedObject: {fileID: 934591352}},
-      {targetCorrespondingSourceObject: {fileID: 4698677049929310292, guid: b6ade579750144be181f357d78906565, type: 3}, insertIndex: -1, addedObject: {fileID: 996440416}},
-      {targetCorrespondingSourceObject: {fileID: 4698677049929310292, guid: b6ade579750144be181f357d78906565, type: 3}, insertIndex: -1, addedObject: {fileID: 996440415}},
-      {targetCorrespondingSourceObject: {fileID: 965172671067303852, guid: b6ade579750144be181f357d78906565, type: 3}, insertIndex: -1, addedObject: {fileID: 996440414}},
-      {targetCorrespondingSourceObject: {fileID: 6783578622496233896, guid: b6ade579750144be181f357d78906565, type: 3}, insertIndex: -1, addedObject: {fileID: 996440413}},
-      {targetCorrespondingSourceObject: {fileID: 7997364042916073663, guid: b6ade579750144be181f357d78906565, type: 3}, insertIndex: -1, addedObject: {fileID: 996440412}},
-      {targetCorrespondingSourceObject: {fileID: 2203495483320386509, guid: b6ade579750144be181f357d78906565, type: 3}, insertIndex: -1, addedObject: {fileID: 1262280988}}]
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8940545440031876407, guid: b6ade579750144be181f357d78906565, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 934591352}
+    - targetCorrespondingSourceObject: {fileID: 4698677049929310292, guid: b6ade579750144be181f357d78906565, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 996440416}
+    - targetCorrespondingSourceObject: {fileID: 4698677049929310292, guid: b6ade579750144be181f357d78906565, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 996440415}
+    - targetCorrespondingSourceObject: {fileID: 965172671067303852, guid: b6ade579750144be181f357d78906565, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 996440414}
+    - targetCorrespondingSourceObject: {fileID: 6783578622496233896, guid: b6ade579750144be181f357d78906565, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 996440413}
+    - targetCorrespondingSourceObject: {fileID: 7997364042916073663, guid: b6ade579750144be181f357d78906565, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 996440412}
+    - targetCorrespondingSourceObject: {fileID: 2203495483320386509, guid: b6ade579750144be181f357d78906565, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1262280988}
   m_SourcePrefab: {fileID: 100100000, guid: b6ade579750144be181f357d78906565, type: 3}
 --- !u!1 &996440406 stripped
 GameObject:
@@ -8188,7 +8204,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5602850928678519603, guid: 57471ffaea86a4a038920fabf912a554, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: bac644310eff3400fa89afb861f7fce2, type: 2}
     - target: {fileID: 6207310858001635297, guid: 57471ffaea86a4a038920fabf912a554, type: 3}
