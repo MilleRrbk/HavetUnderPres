@@ -1,0 +1,74 @@
+{
+    "name": "XRI_DefaultInputActions",
+    "maps": [
+        {
+            "name": "XRI LeftHand Interaction",
+            "id": "a121e7ef-052e-40c5-99e5-c6a3b10c05bf",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "",
+                    "path": "<XRController>{LeftHand}/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "XRI RightHand Interaction",
+            "id": "3bc859ee-b379-41e6-a496-dce6da275902",
+            "actions": [
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "",
+                    "path": "<XRController>{RightHand}/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "XRI LeftHand Locomotion",
+            "id": "242b0201-de52-461d-898a-abafd08f96e5",
+            "actions": [],
+            "bindings": []
+        },
+        {
+            "name": "XRI RightHand Locomotion",
+            "id": "c0b596f4-7283-4429-a2ce-3a33c0be34b5",
+            "actions": [],
+            "bindings": []
+        }
+    ],
+    "controlSchemes": []
+}
