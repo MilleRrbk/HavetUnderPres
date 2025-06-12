@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.41960785, g: 0.7019608, b: 0.57254905, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.3
+  m_FogDensity: 0
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -337,7 +337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 584350420}
   - component: {fileID: 584350419}
-  - component: {fileID: 584350418}
+  - component: {fileID: 584350421}
   m_Layer: 0
   m_Name: Trigger_Til_Fremtid
   m_TagString: Untagged
@@ -345,24 +345,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &584350418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 584350417}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc2fca994c554a0c9b46b58ddf20359, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: Scene_Fremtid
-  sceneToUnload: Scene_Nutid
-  targetFogColor: {r: 0.08877714, g: 0.095644005, b: 0.8962264, a: 1}
-  targetFogDensity: 1
-  transitionDuration: 2
-  initialFogDensity: 1
 --- !u!65 &584350419
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -399,6 +381,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &584350421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584350417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc2fca994c554a0c9b46b58ddf20359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: Scene_Fremtid
+  sceneToUnload: Scene_Nutid
 --- !u!1 &682578221
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +656,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1960915837}
   - component: {fileID: 1960915836}
-  - component: {fileID: 1960915835}
+  - component: {fileID: 1960915838}
   m_Layer: 0
   m_Name: Trigger_Til_Nutid
   m_TagString: Untagged
@@ -668,24 +664,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1960915835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1960915834}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fc2fca994c554a0c9b46b58ddf20359, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: Scene_Nutid
-  sceneToUnload: Scene_Fortid
-  targetFogColor: {r: 0.8962264, g: 0.19023676, b: 0.19023676, a: 1}
-  targetFogDensity: 1
-  transitionDuration: 2
-  initialFogDensity: 1
 --- !u!65 &1960915836
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -722,6 +700,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1960915838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960915834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc2fca994c554a0c9b46b58ddf20359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: Scene_Nutid
+  sceneToUnload: Scene_Fortid
 --- !u!1 &2024529885
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,16 +4,8 @@ using System.Collections;
 
 public class SceneLoaderTriggerFoggy : MonoBehaviour
 {
-    [SerializeField] private string sceneToLoad;     // Den scene, der skal loades (fx "Scene_Nutid")
-    [SerializeField] private string sceneToUnload;   // Den scene, der skal unloades (fx "Scene_Fortid")
-
-    [Header("Target Fog Settings")]
-    public Color targetFogColor = Color.gray;
-    public float targetFogDensity = 0.02f;
-
-    [Header("Transition Settings")]
-    public float transitionDuration = 2f;
-    public float initialFogDensity = 1.0f;
+    [SerializeField] private string sceneToLoad;     // Next scene to load (e.g. "Scene_Nutid")
+    [SerializeField] private string sceneToUnload;   // Scene to unload (e.g. "Scene_Fortid")
 
     private bool hasTriggered = false;
 
@@ -22,55 +14,56 @@ public class SceneLoaderTriggerFoggy : MonoBehaviour
         if (!hasTriggered && other.CompareTag("Player"))
         {
             hasTriggered = true;
-            StartCoroutine(TransitionRoutine());
+            StartCoroutine(LoadSceneRoutine());
         }
     }
 
-    private IEnumerator TransitionRoutine()
+    private IEnumerator LoadSceneRoutine()
     {
-        // Start med kraftig tåge (illusion af rejse)
-        RenderSettings.fog = true;
-        RenderSettings.fogColor = Color.white;
-      	RenderSettings.fogMode = FogMode.Exponential; // or Linear
-        RenderSettings.fogDensity = initialFogDensity;
+        Debug.Log("🔁 Loading scene: " + sceneToLoad);
 
-        // Load ny scene additivt
+        // Load new scene additively
         AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
         while (!loadOp.isDone)
             yield return null;
 
-        // LILLE PAUSE før Unload, så det ikke sker for hurtigt
+        // Set new scene as active
+        Scene newScene = SceneManager.GetSceneByName(sceneToLoad);
+        if (newScene.IsValid())
+            SceneManager.SetActiveScene(newScene);
+
+        // Apply fog settings from the newly loaded scene
+        ApplyFogFromScene(newScene);
+
+        // Optional short delay before unloading old scene
         yield return new WaitForSeconds(0.2f);
 
-        // Unload den gamle scene hvis den stadig er loaded
-        if (!string.IsNullOrEmpty(sceneToUnload) &&
-            SceneManager.GetSceneByName(sceneToUnload).isLoaded)
+        // Unload the previous scene
+        if (!string.IsNullOrEmpty(sceneToUnload) && SceneManager.GetSceneByName(sceneToUnload).isLoaded)
         {
-            Debug.Log("Unloader scene: " + sceneToUnload);
+            Debug.Log("🧹 Unloading scene: " + sceneToUnload);
             AsyncOperation unloadOp = SceneManager.UnloadSceneAsync(sceneToUnload);
             while (!unloadOp.isDone)
                 yield return null;
         }
         else
         {
-            Debug.LogWarning("Kunne ikke unloade: " + sceneToUnload);
+            Debug.LogWarning("⚠️ Could not unload: " + sceneToUnload);
         }
 
-        // Fade tågen langsomt til målindstillinger
-        float elapsed = 0f;
-        float startDensity = initialFogDensity;
+        Debug.Log("✅ Scene switch complete.");
+    }
 
-        while (elapsed < transitionDuration)
+    private void ApplyFogFromScene(Scene targetScene)
+    {
+        foreach (GameObject obj in targetScene.GetRootGameObjects())
         {
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / transitionDuration);
-            RenderSettings.fogColor = Color.Lerp(Color.white, targetFogColor, t);
-            RenderSettings.fogDensity = Mathf.Lerp(startDensity, targetFogDensity, t);
-            yield return null;
+            SceneFogSettings fogSettings = obj.GetComponentInChildren<SceneFogSettings>();
+            if (fogSettings != null)
+            {
+                fogSettings.ApplyNow();
+                break;
+            }
         }
-
-        // Sæt endelig tåge
-        RenderSettings.fogColor = targetFogColor;
-        RenderSettings.fogDensity = targetFogDensity;
     }
 }
