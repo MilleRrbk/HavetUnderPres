@@ -1,6 +1,6 @@
 
 using UnityEngine;
-
+using UnityEngine.XR.Interaction.Toolkit;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -16,7 +16,7 @@ public class FishnetInteraction : MonoBehaviour
     private int deadClickedCount = 0;
     void Awake()
     {
-        XRInteractionManager manager = FindObjectOfType<XRInteractionManager>();
+        XRInteractionManager manager = Object.FindFirstObjectByType<XRInteractionManager>();
 
         foreach (var obj in deadObjects)
         {
