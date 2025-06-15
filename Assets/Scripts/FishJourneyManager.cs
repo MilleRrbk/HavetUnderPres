@@ -4,7 +4,7 @@ using UnityEngine;
 public class FishJourneyManager : MonoBehaviour
 {
     [Header("Waypoints")]
-    public Transform[] waypoints; // Træk waypoints ind i editoren
+    public Transform[] waypoints;
     private int currentIndex = 0;
 
     [Header("Fish Movement")]
@@ -13,16 +13,24 @@ public class FishJourneyManager : MonoBehaviour
     public float stopDistance = 0.5f;
 
     [Header("References")]
-    public Transform playerTransform;     // Træk XR Rig eller kamera herind
-    public AudioSource fishAudio;         // AudioSource med tale/lyd
-    public AudioClip[] fishClips;         // Én clip pr stop
+    public Transform playerTransform;   // XR Rig (not just camera)
+    public AudioSource fishAudio;
+    public AudioClip[] fishClips;
+
+    [Header("Player Follow Settings")]
+    public bool pullPlayerWithFish = true;
+    public Vector3 followOffset = new Vector3(0, 1.5f, -3f);
+    public float followSmoothTime = 0.15f;
+
+    [Header("Constraints")]
+    public float minHeight = 0.5f;
 
     private bool waitingForInput = false;
     private bool isMoving = true;
+    private Vector3 playerVelocity = Vector3.zero;
 
     void Start()
     {
-        AttachPlayer();
         StartCoroutine(MoveToNextPoint());
     }
 
@@ -32,12 +40,42 @@ public class FishJourneyManager : MonoBehaviour
             return;
 
         Transform target = waypoints[currentIndex];
-        Vector3 direction = (target.position - transform.position).normalized;
-        transform.position += direction * moveSpeed * Time.deltaTime;
+        Vector3 direction = target.position - transform.position;
+        float step = moveSpeed * Time.deltaTime;
 
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        // Clamp fish movement to not overshoot
+        if (direction.magnitude <= step)
+        {
+            transform.position = target.position;
+        }
+        else
+        {
+            Vector3 flatDirection = direction;
+            flatDirection.y = 0;
+            flatDirection.Normalize();
+            transform.position += flatDirection * step;
+        }
 
+        // Enforce min height
+        Vector3 pos = transform.position;
+        if (pos.y < minHeight)
+        {
+            pos.y = minHeight;
+            transform.position = pos;
+        }
+
+        // Rotate fish smoothly (Y only)
+        Vector3 flatDir = direction;
+        flatDir.y = 0;
+
+        if (flatDir.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(flatDir) * Quaternion.Euler(0, 180f, 0);
+            Quaternion correction = Quaternion.Euler(0, 90, 0);  // adjust if fish is rotated
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation * correction, Time.deltaTime * rotationSpeed);
+        }
+
+        // Check if reached waypoint
         if (Vector3.Distance(transform.position, target.position) < stopDistance)
         {
             isMoving = false;
@@ -45,15 +83,27 @@ public class FishJourneyManager : MonoBehaviour
         }
     }
 
+    void LateUpdate()
+    {
+        // Smooth follow movement (no rotation override)
+        if (pullPlayerWithFish && playerTransform != null)
+        {
+            Vector3 targetPosition = transform.TransformPoint(followOffset);
+            targetPosition.y = playerTransform.position.y; // preserve XR headset height
+            playerTransform.position = Vector3.SmoothDamp(playerTransform.position, targetPosition, ref playerVelocity, followSmoothTime);
+        }
+    }
+
     IEnumerator HandleArrival()
     {
-        DetachPlayer(); // Så spilleren står frit under stop
-
-        // Kig mod spilleren
         yield return new WaitForSeconds(0.5f);
-        Vector3 lookDir = (playerTransform.position - transform.position).normalized;
-        lookDir.y = 0; // Begræns rotation til horisontal
-        Quaternion facePlayer = Quaternion.LookRotation(lookDir);
+
+        // Fish looks at player (horizontal only)
+        Vector3 lookDir = playerTransform.position - transform.position;
+        lookDir.y = 0;
+        Quaternion facePlayer = Quaternion.LookRotation(lookDir) * Quaternion.Euler(0, -90f, 0);
+
+
         float t = 0f;
         while (t < 1f)
         {
@@ -62,14 +112,13 @@ public class FishJourneyManager : MonoBehaviour
             yield return null;
         }
 
-        // Spil tale/lyd
+        // Play sound
         if (fishClips.Length > currentIndex && fishAudio != null)
         {
             fishAudio.clip = fishClips[currentIndex];
             fishAudio.Play();
         }
 
-        // Vent på brugerens bekræftelse
         waitingForInput = true;
     }
 
@@ -82,12 +131,11 @@ public class FishJourneyManager : MonoBehaviour
 
         if (currentIndex < waypoints.Length)
         {
-            AttachPlayer();
             StartCoroutine(MoveToNextPoint());
         }
         else
         {
-            Debug.Log("Fisken er færdig med rejsen!");
+            Debug.Log("Fish has finished the journey.");
         }
     }
 
@@ -97,13 +145,8 @@ public class FishJourneyManager : MonoBehaviour
         isMoving = true;
     }
 
-    private void AttachPlayer()
+    public bool IsWaitingForInput()
     {
-        playerTransform.SetParent(this.transform);
-    }
-
-    private void DetachPlayer()
-    {
-        playerTransform.SetParent(null);
+        return waitingForInput;
     }
 }
