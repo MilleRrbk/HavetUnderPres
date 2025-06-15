@@ -13,6 +13,12 @@ public class HookClickMover : MonoBehaviour
     private bool moveUp = false;
     private float dipTargetY;
 
+    void Start()
+    {
+        if (mainCamera == null)
+            mainCamera = Camera.main;
+    }
+
     void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
