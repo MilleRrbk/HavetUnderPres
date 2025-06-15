@@ -207,6 +207,7 @@ MonoBehaviour:
   playerTransform: {fileID: 413331696}
   fishAudio: {fileID: 0}
   fishClips: []
+  followPlayer: 0
   followOffset: {x: 6, y: 2, z: 0}
   followSmoothTime: 1.5
   minHeight: 2
