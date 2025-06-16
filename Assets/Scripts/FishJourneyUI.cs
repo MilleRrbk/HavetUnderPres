@@ -12,8 +12,14 @@ public class FishJourneyUI : MonoBehaviour
 
     private Coroutine fadeCoroutine;
 
+    private Transform canvasTransform;
+    private Camera mainCamera;
+
     void Awake()
     {
+        canvasTransform = transform;
+        mainCamera = Camera.main; // Hovedkameraet (VR headset)
+
         if (okButton != null)
         {
             canvasGroup = okButton.GetComponent<CanvasGroup>();
@@ -21,7 +27,11 @@ public class FishJourneyUI : MonoBehaviour
             {
                 canvasGroup = okButton.AddComponent<CanvasGroup>();
             }
+
+            // Start skjult og ikke interaktiv
             canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
             okButton.SetActive(false);
         }
     }
@@ -36,26 +46,42 @@ public class FishJourneyUI : MonoBehaviour
         if (shouldShow && !okButton.activeSelf)
         {
             okButton.SetActive(true);
-            StartFade(1f);  // fade ind
+            StartFade(1f);  // Fade in
         }
         else if (!shouldShow && okButton.activeSelf)
         {
-            StartFade(0f);  // fade ud
+            StartFade(0f);  // Fade out
         }
     }
 
-    public void OnOkButtonPressed()
+    void LateUpdate()
     {
-        if (fishJourneyManager != null)
-        {
-            fishJourneyManager.ContinueJourney();
-        }
+        if (mainCamera == null)
+            return;
+
+        // Placer canvas 1.5 meter foran kameraet, og drej det mod kameraet
+        canvasTransform.position = mainCamera.transform.position + mainCamera.transform.forward * 1.5f;
+
+        // Sørg for canvas "kigger mod" kameraet (så det altid vender rigtigt)
+        canvasTransform.rotation = Quaternion.LookRotation(canvasTransform.position - mainCamera.transform.position);
     }
+
+   public void OnOkButtonPressed()
+{
+    Debug.Log("Knappen blev trykket!");  // <--- Her ser vi om klik kommer igennem
+
+    if (fishJourneyManager != null)
+    {
+        fishJourneyManager.ContinueJourney();
+    }
+}
+
 
     void StartFade(float targetAlpha)
     {
         if (fadeCoroutine != null)
             StopCoroutine(fadeCoroutine);
+
         fadeCoroutine = StartCoroutine(FadeCanvasGroup(targetAlpha));
     }
 
@@ -73,10 +99,16 @@ public class FishJourneyUI : MonoBehaviour
 
         canvasGroup.alpha = targetAlpha;
 
-        if (targetAlpha == 0f)
+        if (targetAlpha == 1f)
         {
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
+        else
+        {
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
             okButton.SetActive(false);
         }
     }
 }
-

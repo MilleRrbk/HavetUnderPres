@@ -15,6 +15,7 @@ public class FishJourneyManager : MonoBehaviour
     [Header("References")]
     public AudioSource fishAudio;
     public AudioClip[] fishClips;
+    public GameObject nextButtonUI;  // 👈 UI Button that appears when fish stops
 
     [Header("Constraints")]
     public float minHeight = 0.5f;
@@ -22,10 +23,22 @@ public class FishJourneyManager : MonoBehaviour
     private bool waitingForInput = false;
     private bool isMoving = true;
 
-    void Start()
+   void Start()
+{
+    if (waypoints.Length == 0) return;
+
+    if (Vector3.Distance(transform.position, waypoints[0].position) < stopDistance)
+    {
+        isMoving = false;
+        StartCoroutine(HandleArrival());
+    }
+    else
     {
         StartCoroutine(MoveToNextPoint());
     }
+}
+
+
 
     void Update()
     {
@@ -36,6 +49,7 @@ public class FishJourneyManager : MonoBehaviour
         Vector3 direction = target.position - transform.position;
         float step = moveSpeed * Time.deltaTime;
 
+        // Move toward the waypoint
         if (direction.magnitude <= step)
         {
             transform.position = target.position;
@@ -49,7 +63,7 @@ public class FishJourneyManager : MonoBehaviour
             transform.position += flatDirection * step;
         }
 
-        // Minimum højde
+        // Keep fish above min height
         Vector3 pos = transform.position;
         if (pos.y < minHeight)
         {
@@ -57,17 +71,18 @@ public class FishJourneyManager : MonoBehaviour
             transform.position = pos;
         }
 
-        // Rotation kun på Y-aksen
+        // Rotate only on Y-axis
         Vector3 flatDir = direction;
         flatDir.y = 0;
 
         if (flatDir.sqrMagnitude > 0.001f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(flatDir);
-            Quaternion correction = Quaternion.Euler(0, 270, 0);
+            Quaternion correction = Quaternion.Euler(0, 270, 0); // Adjust fish facing direction
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation * correction, Time.deltaTime * rotationSpeed);
         }
 
+        // Arrived at waypoint
         if (Vector3.Distance(transform.position, target.position) < stopDistance)
         {
             isMoving = false;
@@ -79,12 +94,16 @@ public class FishJourneyManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        // Spil lyd hvis der er
+        // Play sound for this waypoint
         if (fishClips.Length > currentIndex && fishAudio != null)
         {
             fishAudio.clip = fishClips[currentIndex];
             fishAudio.Play();
         }
+
+        // Show the "Next" button
+        if (nextButtonUI != null)
+            nextButtonUI.SetActive(true);
 
         waitingForInput = true;
     }
@@ -94,6 +113,11 @@ public class FishJourneyManager : MonoBehaviour
         if (!waitingForInput) return;
 
         waitingForInput = false;
+
+        // Hide the "Next" button
+        if (nextButtonUI != null)
+            nextButtonUI.SetActive(false);
+
         currentIndex++;
 
         if (currentIndex < waypoints.Length)
