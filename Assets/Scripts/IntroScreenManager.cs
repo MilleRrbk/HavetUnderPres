@@ -1,41 +1,55 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
-using TMPro;
+using UnityEngine.Rendering;
 
 /// <summary>
-/// Viser en sløret introskærm og låser spillet, indtil brugeren klikker "Start".
+/// Viser en sløret introskærm oven på XR-kameraet, låser tiden,
+/// og fjerner alt igen, når brugeren klikker "Start".
 /// </summary>
 public class IntroScreenManager : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private Canvas introCanvas;          // Hele Canvas'en
-    [SerializeField] private Volume volume;               // Global Volume med Depth of Field
-    [SerializeField] private GameObject blurTarget;       // Panelet med UI Blur (kan også være null)
-    
-    [Header("Optional")]
-    [SerializeField] private bool lockTime = true;        // Stop tid mens intro vises
+    [Header("UI-referencer (drag-&-drop)")]
+    [SerializeField] private Canvas introCanvas;    // Hele Canvas-enhed
+    [SerializeField] private GameObject blurPanel;  // Panel med UniversalBlurUI-materiale
+    [SerializeField] private Button startButton;    // "Start"-knappen
+
+    [Header("Valgfri post-processing")]
+    [SerializeField] private Volume blurVolume;     // URP Global Volume med Depth Of Field (kan være null)
+
+    [Header("Adfærd")]
+    [SerializeField] private bool pauseTime = true; // Stop Time.timeScale mens intro er aktiv
 
     private void Awake()
     {
-        // Sørg for at være aktiv fra start
+        // Vis UI + blur ved spilstart
         introCanvas.enabled = true;
-        if (volume != null) volume.enabled = true;
-        if (blurTarget != null) blurTarget.SetActive(true);
+        if (blurPanel   != null) blurPanel.SetActive(true);
+        if (blurVolume  != null) blurVolume.enabled = true;
 
-        if (lockTime) Time.timeScale = 0f; // fryser alt gameplay
+        if (pauseTime) Time.timeScale = 0f;          // fryser alt gameplay
+
+        // Knyt klik-håndtering
+        if (startButton != null)
+            startButton.onClick.AddListener(StartExperience);
     }
 
     /// <summary>
-    /// Kaldes af Start-knappens OnClick().
+    /// Kaldes, når brugeren trykker på "Start".
+    /// Skjuler introen og genoptager spillet.
     /// </summary>
     public void StartExperience()
     {
-        // Fjern blur + UI
-        introCanvas.enabled = false;
-        if (volume != null) volume.enabled = false;
-        if (blurTarget != null) blurTarget.SetActive(false);
+        if (pauseTime) Time.timeScale = 1f;
 
-        if (lockTime) Time.timeScale = 1f; // genoptag gameplay
+        // Fjern UI og blur
+        introCanvas.enabled = false;
+        if (blurPanel  != null) blurPanel.SetActive(false);
+        if (blurVolume != null) blurVolume.enabled = false;
+
+        // Afmeld lytter og deaktivér dette script (ikke strengt nødvendigt)
+        if (startButton != null)
+            startButton.onClick.RemoveListener(StartExperience);
+
+        enabled = false;
     }
-} 
+}
