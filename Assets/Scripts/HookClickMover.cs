@@ -19,7 +19,18 @@ public class HookClickMover : MonoBehaviour
             mainCamera = Camera.main;
     }
 
-    void Update()
+    
+    public void TriggerHookDip()
+    {
+        if (!dipDown && !moveUp)
+        {
+            Debug.Log("Hook triggered via XR!");
+            dipTargetY = fishingHook.position.y - dipDistance;
+            dipDown = true;
+        }
+    }
+
+    /*void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
@@ -60,5 +71,5 @@ public class HookClickMover : MonoBehaviour
             if (Mathf.Approximately(pos.y, targetY))
                 moveUp = false;
         }
-    }
+    }*/
 }
