@@ -3,7 +3,7 @@ using UnityEngine;
 public class UIFaceCamera : MonoBehaviour
 {
     [SerializeField] private Transform targetCamera; // Træk Main Camera ind her
-    [SerializeField] private float distance = 2f;     // Hvor langt foran kameraet canvas skal placeres
+    [SerializeField] private float distance = 5f;     // Hvor langt foran kameraet canvas skal placeres
     [SerializeField] private bool faceCamera = true;  // Skal UI også rotere mod kamera?
 
     private void LateUpdate()
