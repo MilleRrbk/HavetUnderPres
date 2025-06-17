@@ -16,8 +16,8 @@ public class FishJourneyManager : MonoBehaviour
 
     // ──────────── Audio & UI ────────────
     [Header("References")]
-    public AudioSource[] fishSources;        // 🎧 Træk dine AudioSource-objekter herind (fx IntroTaleTorben osv.)
-    public GameObject nextButtonUI;
+    public AudioSource[] fishSources;   // Ét AudioSource-objekt pr. waypoint
+    public GameObject nextButtonUI;     // Knappen der vises når fisken stopper
 
     // ──────────── Constraints ────────────
     [Header("Constraints")]
@@ -50,90 +50,74 @@ public class FishJourneyManager : MonoBehaviour
         Vector3 direction = target.position - transform.position;
         float step = moveSpeed * Time.deltaTime;
 
-        // Bevægelse
+        // ─── Bevægelse ───
         if (direction.magnitude <= step)
-        {
             transform.position = target.position;
-        }
         else
         {
-            Vector3 flatDirection = direction;
-            flatDirection.y = 0;
-            flatDirection.Normalize();
-
-            transform.position += flatDirection * step;
+            Vector3 flatDir = direction; flatDir.y = 0;
+            transform.position += flatDir.normalized * step;
         }
 
         // Højde-begrænsning
         Vector3 pos = transform.position;
-        if (pos.y < minHeight)
-        {
-            pos.y = minHeight;
-            transform.position = pos;
-        }
+        if (pos.y < minHeight) { pos.y = minHeight; transform.position = pos; }
 
-        // Rotation
-        Vector3 flatDir = direction;
-        flatDir.y = 0;
-
-        if (flatDir.sqrMagnitude > 0.001f)
+        // Rotation kun på Y
+        Vector3 faceDir = direction; faceDir.y = 0;
+        if (faceDir.sqrMagnitude > 0.001f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(flatDir);
+            Quaternion targetRot = Quaternion.LookRotation(faceDir);
             Quaternion correction = Quaternion.Euler(0, 270, 0);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation * correction, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot * correction, Time.deltaTime * rotationSpeed);
         }
 
-        // Ankommet?
+        // Ankommet til waypoint
         if (Vector3.Distance(transform.position, target.position) < stopDistance)
         {
             isMoving = false;
-            StartCoroutine(HandleArrival());
+            StartCoroutine(HandleArrival());   // fisk stopper; lyd/knap styres her ELLER via trigger
         }
     }
 
+    // ─── Når fisken rammer waypointet ───
     IEnumerator HandleArrival()
     {
-        yield return new WaitForSeconds(0.5f); // Pause efter ankomst
-        yield return new WaitForSeconds(1f);   // Vent 7 sekunder før tale
+        yield return new WaitForSeconds(0.5f);   // lille pause
+        // 7 sekunders ro før taleklippet (kan fjernes hvis du bruger trigger i stedet)
+        yield return new WaitForSeconds(7f);
 
-        // Stop alle lyde (for en sikkerheds skyld)
-        foreach (AudioSource src in fishSources)
-        {
-            if (src != null) src.Stop();
-        }
-
-        // Afspil den rigtige lyd
-        if (fishSources.Length > currentIndex && fishSources[currentIndex] != null)
-        {
-            fishSources[currentIndex].Play();
-        }
+        PlaySpeechForCurrentIndex();
 
         // Vis knap
-        if (nextButtonUI != null)
-            nextButtonUI.SetActive(true);
+        if (nextButtonUI) nextButtonUI.SetActive(true);
 
         waitingForInput = true;
     }
 
-    public void ContinueJourney()
+    // Spiller lyd fra det AudioSource-objekt der svarer til currentIndex
+    private void PlaySpeechForCurrentIndex()
+    {
+        // Stop alle andre
+        foreach (AudioSource src in fishSources) if (src) src.Stop();
+
+        if (fishSources.Length > currentIndex && fishSources[currentIndex])
+            fishSources[currentIndex].Play();
+    }
+
+    public void ContinueJourney()   // kaldes af knappen
     {
         if (!waitingForInput) return;
 
         waitingForInput = false;
-
-        if (nextButtonUI != null)
-            nextButtonUI.SetActive(false);
+        if (nextButtonUI) nextButtonUI.SetActive(false);
 
         currentIndex++;
 
         if (currentIndex < waypoints.Length)
-        {
             StartCoroutine(MoveToNextPoint());
-        }
         else
-        {
             Debug.Log("Fisken er færdig med rejsen!");
-        }
     }
 
     IEnumerator MoveToNextPoint()
@@ -142,8 +126,11 @@ public class FishJourneyManager : MonoBehaviour
         isMoving = true;
     }
 
-    public bool IsWaitingForInput()
+    // ─── Bruges af SpeechTrigger ───
+    public void SetWaitingForInput(bool value)
     {
-        return waitingForInput;
+        waitingForInput = value;
     }
+
+    public bool IsWaitingForInput() => waitingForInput;
 }
