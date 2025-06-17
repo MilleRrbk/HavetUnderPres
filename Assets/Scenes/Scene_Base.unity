@@ -236,8 +236,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: cb2a58ae32abc4992b979685ce9604e4, type: 3}
-  m_Resource: {fileID: 8300000, guid: cb2a58ae32abc4992b979685ce9604e4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 31445e278963e4ba3a79caaac925fb55, type: 3}
+  m_Resource: {fileID: 8300000, guid: 31445e278963e4ba3a79caaac925fb55, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -534,8 +534,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: cb2a58ae32abc4992b979685ce9604e4, type: 3}
-  m_Resource: {fileID: 8300000, guid: cb2a58ae32abc4992b979685ce9604e4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 30796d252c66b4407a2a59c9dd2f59f7, type: 3}
+  m_Resource: {fileID: 8300000, guid: 30796d252c66b4407a2a59c9dd2f59f7, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -750,8 +750,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: cb2a58ae32abc4992b979685ce9604e4, type: 3}
-  m_Resource: {fileID: 8300000, guid: cb2a58ae32abc4992b979685ce9604e4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 621f4b569a9574f4a86f650058a2528e, type: 3}
+  m_Resource: {fileID: 8300000, guid: 621f4b569a9574f4a86f650058a2528e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1015,8 +1015,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: cb2a58ae32abc4992b979685ce9604e4, type: 3}
-  m_Resource: {fileID: 8300000, guid: cb2a58ae32abc4992b979685ce9604e4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a450e456544e74160acff441345c60eb, type: 3}
+  m_Resource: {fileID: 8300000, guid: a450e456544e74160acff441345c60eb, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2019,8 +2019,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: cb2a58ae32abc4992b979685ce9604e4, type: 3}
-  m_Resource: {fileID: 8300000, guid: cb2a58ae32abc4992b979685ce9604e4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4be69c33bb88a4dd68ff320ccde6ef88, type: 3}
+  m_Resource: {fileID: 8300000, guid: 4be69c33bb88a4dd68ff320ccde6ef88, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
