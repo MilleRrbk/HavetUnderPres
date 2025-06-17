@@ -1,25 +1,17 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class HookClickMover : MonoBehaviour
 {
-    public Camera mainCamera;
     public Transform fishingHook;
     public float targetY = 20.4f;
-    public float dipDistance = .5f;
+    public float dipDistance = 0.5f;
     public float moveSpeed = 5f;
 
     private bool dipDown = false;
     private bool moveUp = false;
     private float dipTargetY;
 
-    void Start()
-    {
-        if (mainCamera == null)
-            mainCamera = Camera.main;
-    }
-
-    
+    // This method will be triggered by the XR Simple Interactable's Select Entered event
     public void TriggerHookDip()
     {
         if (!dipDown && !moveUp)
@@ -29,6 +21,41 @@ public class HookClickMover : MonoBehaviour
             dipDown = true;
         }
     }
+
+    void Update()
+    {
+        if (dipDown)
+        {
+            Vector3 pos = fishingHook.position;
+            pos.y = Mathf.MoveTowards(pos.y, dipTargetY, moveSpeed * Time.deltaTime);
+            fishingHook.position = pos;
+
+            if (Mathf.Approximately(pos.y, dipTargetY))
+            {
+                dipDown = false;
+                moveUp = true;
+            }
+        }
+
+        if (moveUp)
+        {
+            Vector3 pos = fishingHook.position;
+            pos.y = Mathf.MoveTowards(pos.y, targetY, moveSpeed * Time.deltaTime);
+            fishingHook.position = pos;
+
+            if (Mathf.Approximately(pos.y, targetY))
+            {
+                moveUp = false;
+            }
+        }
+    }
+}
+
+
+
+
+
+
 
     /*void Update()
     {
@@ -72,4 +99,3 @@ public class HookClickMover : MonoBehaviour
                 moveUp = false;
         }
     }*/
-}

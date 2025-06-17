@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 594814069963826642, guid: f3a0e9d86b6c44b3e9c84bb1b80e22da, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 55.1
+      value: 74.7
       objectReference: {fileID: 0}
     - target: {fileID: 594814069963826642, guid: f3a0e9d86b6c44b3e9c84bb1b80e22da, type: 3}
       propertyPath: m_LocalRotation.w
@@ -202,7 +202,7 @@ MonoBehaviour:
   - {fileID: 322596812}
   - {fileID: 1974400092}
   - {fileID: 687163847}
-  moveSpeed: 2
+  moveSpeed: 2.5
   rotationSpeed: 2
   stopDistance: 2.5
   introSpeechSource: {fileID: 209805802}

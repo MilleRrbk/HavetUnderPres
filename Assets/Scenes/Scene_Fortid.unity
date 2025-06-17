@@ -25279,12 +25279,12 @@ PrefabInstance:
     - {fileID: 3604817775027424596, guid: 2262e1961fcd3410bb002741190ba329, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5870072346616801610, guid: 2262e1961fcd3410bb002741190ba329, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1178034308}
     - targetCorrespondingSourceObject: {fileID: 6258835049323984751, guid: 2262e1961fcd3410bb002741190ba329, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1178034305}
-    - targetCorrespondingSourceObject: {fileID: 6258835049323984751, guid: 2262e1961fcd3410bb002741190ba329, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1178034306}
   m_SourcePrefab: {fileID: 100100000, guid: 2262e1961fcd3410bb002741190ba329, type: 3}
 --- !u!1 &1178034304 stripped
 GameObject:
@@ -25339,7 +25339,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1178034306}
+      - m_Target: {fileID: 1178034308}
         m_TargetAssemblyTypeName: HookClickMover, Assembly-CSharp
         m_MethodName: TriggerHookDip
         m_Mode: 1
@@ -25375,20 +25375,29 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
---- !u!114 &1178034306
+--- !u!1 &1178034306 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5870072346616801610, guid: 2262e1961fcd3410bb002741190ba329, type: 3}
+  m_PrefabInstance: {fileID: 1178034303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1178034307 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6896509820509959547, guid: 2262e1961fcd3410bb002741190ba329, type: 3}
+  m_PrefabInstance: {fileID: 1178034303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1178034308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178034304}
+  m_GameObject: {fileID: 1178034306}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06f215dff8d7c4682ab5579949a9e85a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  fishingHook: {fileID: 0}
+  fishingHook: {fileID: 1178034307}
   targetY: 20.4
   dipDistance: 0.5
   moveSpeed: 5
