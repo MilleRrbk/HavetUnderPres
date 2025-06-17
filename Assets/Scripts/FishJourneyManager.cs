@@ -3,53 +3,54 @@ using UnityEngine;
 
 public class FishJourneyManager : MonoBehaviour
 {
+    // ──────────── Waypoints ────────────
     [Header("Waypoints")]
     public Transform[] waypoints;
     private int currentIndex = 0;
 
+    // ──────────── Movement ────────────
     [Header("Fish Movement")]
     public float moveSpeed = 1.5f;
     public float rotationSpeed = 2f;
     public float stopDistance = 0.5f;
 
+    // ──────────── Audio & UI ────────────
     [Header("References")]
-    public AudioSource fishAudio;
-    public AudioClip[] fishClips;
-    public GameObject nextButtonUI;  // 👈 UI Button that appears when fish stops
+    public AudioSource[] fishSources;        // 🎧 Træk dine AudioSource-objekter herind (fx IntroTaleTorben osv.)
+    public GameObject nextButtonUI;
 
+    // ──────────── Constraints ────────────
     [Header("Constraints")]
     public float minHeight = 0.5f;
 
+    // ──────────── Intern tilstand ────────────
     private bool waitingForInput = false;
     private bool isMoving = true;
 
-   void Start()
-{
-    if (waypoints.Length == 0) return;
-
-    if (Vector3.Distance(transform.position, waypoints[0].position) < stopDistance)
+    void Start()
     {
-        isMoving = false;
-        StartCoroutine(HandleArrival());
-    }
-    else
-    {
-        StartCoroutine(MoveToNextPoint());
-    }
-}
+        if (waypoints.Length == 0) return;
 
-
+        if (Vector3.Distance(transform.position, waypoints[0].position) < stopDistance)
+        {
+            isMoving = false;
+            StartCoroutine(HandleArrival());
+        }
+        else
+        {
+            StartCoroutine(MoveToNextPoint());
+        }
+    }
 
     void Update()
     {
-        if (!isMoving || currentIndex >= waypoints.Length)
-            return;
+        if (!isMoving || currentIndex >= waypoints.Length) return;
 
         Transform target = waypoints[currentIndex];
         Vector3 direction = target.position - transform.position;
         float step = moveSpeed * Time.deltaTime;
 
-        // Move toward the waypoint
+        // Bevægelse
         if (direction.magnitude <= step)
         {
             transform.position = target.position;
@@ -63,7 +64,7 @@ public class FishJourneyManager : MonoBehaviour
             transform.position += flatDirection * step;
         }
 
-        // Keep fish above min height
+        // Højde-begrænsning
         Vector3 pos = transform.position;
         if (pos.y < minHeight)
         {
@@ -71,18 +72,18 @@ public class FishJourneyManager : MonoBehaviour
             transform.position = pos;
         }
 
-        // Rotate only on Y-axis
+        // Rotation
         Vector3 flatDir = direction;
         flatDir.y = 0;
 
         if (flatDir.sqrMagnitude > 0.001f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(flatDir);
-            Quaternion correction = Quaternion.Euler(0, 270, 0); // Adjust fish facing direction
+            Quaternion correction = Quaternion.Euler(0, 270, 0);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation * correction, Time.deltaTime * rotationSpeed);
         }
 
-        // Arrived at waypoint
+        // Ankommet?
         if (Vector3.Distance(transform.position, target.position) < stopDistance)
         {
             isMoving = false;
@@ -92,16 +93,22 @@ public class FishJourneyManager : MonoBehaviour
 
     IEnumerator HandleArrival()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f); // Pause efter ankomst
+        yield return new WaitForSeconds(1f);   // Vent 7 sekunder før tale
 
-        // Play sound for this waypoint
-        if (fishClips.Length > currentIndex && fishAudio != null)
+        // Stop alle lyde (for en sikkerheds skyld)
+        foreach (AudioSource src in fishSources)
         {
-            fishAudio.clip = fishClips[currentIndex];
-            fishAudio.Play();
+            if (src != null) src.Stop();
         }
 
-        // Show the "Next" button
+        // Afspil den rigtige lyd
+        if (fishSources.Length > currentIndex && fishSources[currentIndex] != null)
+        {
+            fishSources[currentIndex].Play();
+        }
+
+        // Vis knap
         if (nextButtonUI != null)
             nextButtonUI.SetActive(true);
 
@@ -114,7 +121,6 @@ public class FishJourneyManager : MonoBehaviour
 
         waitingForInput = false;
 
-        // Hide the "Next" button
         if (nextButtonUI != null)
             nextButtonUI.SetActive(false);
 
