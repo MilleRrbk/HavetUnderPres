@@ -205,8 +205,8 @@ MonoBehaviour:
   moveSpeed: 5
   rotationSpeed: 2
   stopDistance: 2.5
-  fishSources:
-  - {fileID: 209805802}
+  introSpeechSource: {fileID: 209805802}
+  fishSources: []
   nextButtonUI: {fileID: 0}
   minHeight: 2
 --- !u!1 &76196377
