@@ -1,26 +1,47 @@
 using UnityEngine;
+using System.Collections;
+
 
 public class SpeechTrigger : MonoBehaviour
 {
-    public FishJourneyManager fishJourney;
+    public AudioSource audioSource;
+    public GameObject nextButton;
+    public SubtitleController subtitleController;
+
+    [TextArea(3,10)] public string[] subtitleLines;   // Sætninger
+    public float[] durations;                         // Hvor længe hver skal vises
 
     private bool hasTriggered = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hasTriggered) return;
-        if (!other.CompareTag("Player")) return;
-
+        if (hasTriggered || !other.CompareTag("Player")) return;
         hasTriggered = true;
 
-        if (fishJourney != null)
+        StartCoroutine(PlaySequence());
+    }
+
+    private IEnumerator PlaySequence()
+    {
+        if (subtitleController != null)
         {
-            fishJourney.TriggerSpeech();
+            subtitleController.Hide(); // ryd evt. tidligere tekst
+            subtitleController.ShowSequence(subtitleLines, durations);
         }
 
-        gameObject.SetActive(false); // valgfrit: deaktiver trigger
+        if (audioSource != null)
+            audioSource.Play();
+
+        yield return new WaitUntil(() => !audioSource.isPlaying);
+
+        if (nextButton != null)
+            nextButton.SetActive(true);
+
+        gameObject.SetActive(false);
     }
+
 }
+
 
 
 /*
