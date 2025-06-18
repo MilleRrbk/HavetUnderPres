@@ -3624,7 +3624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishJourneyManager: {fileID: 65469072}
   okButton: {fileID: 587036511}
-  fadeDuration: 1
+  fadeDuration: 0.5
 --- !u!114 &1332268006
 MonoBehaviour:
   m_ObjectHideFlags: 0

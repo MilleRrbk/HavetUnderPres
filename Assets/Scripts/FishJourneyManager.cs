@@ -3,39 +3,39 @@ using UnityEngine;
 
 public class FishJourneyManager : MonoBehaviour
 {
-    // ─── Waypoints ───────────────────────────────────────────────
+    // ─── waypoints ───────────────────────────────────────────────
     [Header("Waypoints")]
     public Transform[] waypoints;
     private int currentIndex = 0;
 
-    // ─── Movement ────────────────────────────────────────────────
+    // ─── movement ────────────────────────────────────────────────
     [Header("Fish Movement")]
     public float moveSpeed     = 1.5f;
     public float rotationSpeed = 2f;
     public float stopDistance  = 0.5f;
 
-    // ─── Audio & UI ──────────────────────────────────────────────
+    // ─── audio & ui ──────────────────────────────────────────────
     [Header("Audio & UI")]
-    public AudioSource  introSpeechSource;   // Spilles KUN ved waypoint 0
-    public AudioSource[] fishSources;        // Ét AudioSource pr. EFTERFØLGENDE waypoint
-    public GameObject   nextButtonUI;        // Knappen der vises når fisken stopper
+    public AudioSource  introSpeechSource;   // spiller kun ved waypoint 0
+    public AudioSource[] fishSources;        // ét audiosource pr. efterfølgende waypoint
+    public GameObject   nextButtonUI;        // knappen der vises når fisken stopper
 
-    // ─── Constraints ─────────────────────────────────────────────
+    // ─── constraints ─────────────────────────────────────────────
     [Header("Constraints")]
     public float minHeight = 0.5f;
 
-    // ─── Intern tilstand ─────────────────────────────────────────
+    // ─── intern tilstand ─────────────────────────────────────────
     private bool waitingForInput = false;
     private bool isMoving        = true;
 
     // ─────────────────────────────────────────────────────────────
-    //  INITIALISERING
+    //  initialisering
     // ─────────────────────────────────────────────────────────────
     void Start()
     {
         if (waypoints.Length == 0) return;
 
-        // Hvis fisken starter meget tæt på waypoint 0
+        // hvis fisken starter tæt på waypoint 0
         if (Vector3.Distance(transform.position, waypoints[0].position) < stopDistance)
         {
             isMoving = false;
@@ -48,7 +48,7 @@ public class FishJourneyManager : MonoBehaviour
     }
 
     // ─────────────────────────────────────────────────────────────
-    //  OPDATERING
+    //  opdatering
     // ─────────────────────────────────────────────────────────────
     void Update()
     {
@@ -58,28 +58,28 @@ public class FishJourneyManager : MonoBehaviour
         Vector3   direction = target.position - transform.position;
         float     step      = moveSpeed * Time.deltaTime;
 
-        // Bevæg fisken
+        // bevæg fisken
         if (direction.magnitude <= step)
             transform.position = target.position;
         else
             transform.position += new Vector3(direction.x, 0, direction.z).normalized * step;
 
-        // Højde-begrænsning
+        // højde-begrænsning
         Vector3 pos = transform.position;
         if (pos.y < minHeight) { pos.y = minHeight; transform.position = pos; }
 
-        // Rotation (kun Y-akse)
+        // rotation (kun y-akse)
         Vector3 faceDir = new Vector3(direction.x, 0, direction.z);
         if (faceDir.sqrMagnitude > 0.001f)
         {
             Quaternion targetRot  = Quaternion.LookRotation(faceDir);
-            Quaternion correction = Quaternion.Euler(0, 270, 0); // fiskens model retning
+            Quaternion correction = Quaternion.Euler(0, 270, 0); // fiskens model-retning
             transform.rotation    = Quaternion.Slerp(transform.rotation,
                                                      targetRot * correction,
                                                      Time.deltaTime * rotationSpeed);
         }
 
-        // Nået waypoint?
+        // nået waypoint?
         if (Vector3.Distance(transform.position, target.position) < stopDistance)
         {
             isMoving = false;
@@ -88,65 +88,54 @@ public class FishJourneyManager : MonoBehaviour
     }
 
     // ─────────────────────────────────────────────────────────────
-    //  HÅNDTER ANKOMST TIL WAYPOINT
+    //  håndter ankomst til waypoint
     // ─────────────────────────────────────────────────────────────
-// ─────────────────────────────────────────────────────────────
-//  HÅNDTER ANKOMST TIL WAYPOINT
-// ─────────────────────────────────────────────────────────────
-IEnumerator HandleArrival()
-{
-    yield return new WaitForSeconds(0.5f);           // lille pause
-
-    // ── WAYPOINT 0: INTROTALEN ───────────────────────────────
-    if (currentIndex == 0 && introSpeechSource != null)
+    IEnumerator HandleArrival()
     {
-        introSpeechSource.Play();
-        // ➜ vent helt til lyden er færdig
-        yield return new WaitUntil(() => !introSpeechSource.isPlaying);
+        yield return new WaitForSeconds(0.5f); // lille pause
+
+        // waypoint 0: introtale
+        if (currentIndex == 0 && introSpeechSource != null)
+        {
+            introSpeechSource.Play();
+            yield return new WaitUntil(() => !introSpeechSource.isPlaying);
+        }
+        // øvrige waypoints
+        else
+        {
+            yield return new WaitForSeconds(0.5f); // kort pause
+            AudioSource src = PlaySpeechForCurrentIndex();
+            if (src != null)
+                yield return new WaitUntil(() => !src.isPlaying);
+        }
+
+        // kun vis knappen hvis der er flere waypoints tilbage
+        bool isLastWaypoint = currentIndex >= waypoints.Length - 1;
+        if (!isLastWaypoint && nextButtonUI != null)
+            nextButtonUI.SetActive(true);
+
+        waitingForInput = true;
     }
-    // ── ØVRIGE WAYPOINTS ────────────────────────────────────
-    else
+
+    // ─────────────────────────────────────────────────────────────
+    //  afspil korrekt tale pr. waypoint
+    // ─────────────────────────────────────────────────────────────
+    private AudioSource PlaySpeechForCurrentIndex()
     {
-        // evt. kort pause før talen starter
-        yield return new WaitForSeconds(0.5f);
+        foreach (AudioSource s in fishSources)
+            if (s) s.Stop();
 
-        // start tale
-        AudioSource src = PlaySpeechForCurrentIndex();
-
-        // ➜ vent til klippet stopper
-        if (src != null)                                      
-            yield return new WaitUntil(() => !src.isPlaying); 
+        int idx = currentIndex - 1; // fishSources starter ved wp 1
+        if (idx >= 0 && idx < fishSources.Length && fishSources[idx] != null)
+        {
+            fishSources[idx].Play();
+            return fishSources[idx];
+        }
+        return null;
     }
 
-    // ── NU vises knappen ─────────────────────────────────────
-    if (nextButtonUI != null)
-        nextButtonUI.SetActive(true);
-
-    waitingForInput = true;
-}
-
-
     // ─────────────────────────────────────────────────────────────
-    //  AFSPLIL KORREKT TALE PR. WAYPOINT (EFTER INTRO)
-    // ─────────────────────────────────────────────────────────────
- // Ændr returtypen så vi kan få referencen
-private AudioSource PlaySpeechForCurrentIndex()
-{
-    foreach (AudioSource s in fishSources)            // stop alle andre
-        if (s) s.Stop();
-
-    int idx = currentIndex - 1;                       // fishSources starter ved wp 1
-    if (idx >= 0 && idx < fishSources.Length && fishSources[idx] != null)
-    {
-        fishSources[idx].Play();
-        return fishSources[idx];                      // giver ref. tilbage
-    }
-    return null;
-}
-
-
-    // ─────────────────────────────────────────────────────────────
-    //  UI-KNAP KALDER DENNE
+    //  ui-knap kalder denne
     // ─────────────────────────────────────────────────────────────
     public void ContinueJourney()
     {
@@ -161,11 +150,11 @@ private AudioSource PlaySpeechForCurrentIndex()
         if (currentIndex < waypoints.Length)
             StartCoroutine(MoveToNextPoint());
         else
-            Debug.Log("Fisken er færdig med rejsen!");
+            Debug.Log("fisken er færdig med rejsen!");
     }
 
     // ─────────────────────────────────────────────────────────────
-    //  FORTSÆT TIL NÆSTE WAYPOINT
+    //  fortsæt til næste waypoint
     // ─────────────────────────────────────────────────────────────
     IEnumerator MoveToNextPoint()
     {
@@ -174,9 +163,8 @@ private AudioSource PlaySpeechForCurrentIndex()
     }
 
     // ─────────────────────────────────────────────────────────────
-    //  EKSTERN KONTROL FRA TRIGGERS
+    //  ekstern kontrol fra triggers
     // ─────────────────────────────────────────────────────────────
     public void SetWaitingForInput(bool value) => waitingForInput = value;
-
-    public bool IsWaitingForInput() => waitingForInput;
+    public bool IsWaitingForInput()           => waitingForInput;
 }
