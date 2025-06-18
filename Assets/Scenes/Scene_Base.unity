@@ -1312,7 +1312,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "G\xE5 videre"
+  m_text: "Tryk for at fors\xE6tte"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2210,8 +2210,18 @@ MonoBehaviour:
   audioSource: {fileID: 987789988}
   nextButton: {fileID: 587036511}
   subtitleController: {fileID: 273774534}
-  subtitleLines: []
-  durations: []
+  subtitleLines:
+  - "Org det tr\xE6ls - her ligger et tabt fiskenet p\xE5 bunden. Intet holder det
+    fast oppe i overfladen l\xE6ngere, men det fanger stadig fisk, som d\xF8r og
+    r\xE5dner hernede. "
+  - "Nettet stiger op til overfladen, n\xE5r det ikke er tungt af fisk - Men hvis
+    ingen fjerner det deroppe, vil nye fisk sidde fast  og s\xE5 synker det til bunds
+    igen. Derfor kalder vi det et sp\xF8gelsesnet. \n"
+  - "Hj\xE6lp mig: tryk p\xE5 de d\xF8de fisk, for at fjerne dem."
+  durations:
+  - 5
+  - 5
+  - 2
 --- !u!1001 &556400789
 PrefabInstance:
   m_ObjectHideFlags: 0
