@@ -46,12 +46,15 @@ public class FishnetInteraction : MonoBehaviour
     {
         obj.SetActive(false);
         deadClickedCount++;
+        Debug.Log($"Klik: {deadClickedCount}/{deadObjects.Count}");
 
         if (deadClickedCount >= deadObjects.Count)
         {
+            Debug.Log("Alle døde klikket – starter coroutine");
             StartCoroutine(FreeCrabsAndMoveNet());
         }
-    }
+    } 
+
 
     IEnumerator FreeCrabsAndMoveNet()
     {
