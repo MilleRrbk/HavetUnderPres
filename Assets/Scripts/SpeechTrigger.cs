@@ -2,24 +2,26 @@ using UnityEngine;
 
 public class SpeechTrigger : MonoBehaviour
 {
-    public AudioSource audioSourceToPlay;
-    public FishJourneyManager fishJourney;  // Sørg for at tilføje denne i Inspector!
+    public FishJourneyManager fishJourney;
 
     private bool hasTriggered = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hasTriggered || !other.CompareTag("Player")) return;
+        if (hasTriggered) return;
+        if (!other.CompareTag("Player")) return;
+
         hasTriggered = true;
 
-        if (audioSourceToPlay) audioSourceToPlay.Play();
+        if (fishJourney != null)
+        {
+            fishJourney.TriggerSpeech();
+        }
 
-        // Fortæl fisken at den nu venter på input (så FishJourneyManager viser knappen senere)
-        if (fishJourney) fishJourney.SetWaitingForInput(true);
-
-        gameObject.SetActive(false); // Deaktiver triggeren
+        gameObject.SetActive(false); // valgfrit: deaktiver trigger
     }
 }
+
 
 /*
 using UnityEngine;

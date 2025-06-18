@@ -4,111 +4,108 @@ using System.Collections;
 
 public class FishJourneyUI : MonoBehaviour
 {
+    [Header("References")]
     public FishJourneyManager fishJourneyManager;
     public GameObject okButton;
-    private CanvasGroup canvasGroup;
 
+    [Header("UI Behaviour")]
     public float fadeDuration = 0.5f;
 
-    private Coroutine fadeCoroutine;
-
-    private Transform canvasTransform;
-    private Camera mainCamera;
+    CanvasGroup canvasGroup;
+    Coroutine fadeRoutine;
+    Camera mainCam;
+    Transform t;
 
     void Awake()
     {
-        canvasTransform = transform;
-        mainCamera = Camera.main; // Hovedkameraet (VR headset)
+        mainCam = Camera.main;
+        t = transform;
 
-        if (okButton != null)
+        if (okButton == null)
         {
-            canvasGroup = okButton.GetComponent<CanvasGroup>();
-            if (canvasGroup == null)
-            {
-                canvasGroup = okButton.AddComponent<CanvasGroup>();
-            }
-
-            // Start skjult og ikke interaktiv
-            canvasGroup.alpha = 0f;
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false;
-            okButton.SetActive(false);
+            Debug.LogError("FishJourneyUI: OkButton er ikke sat i Inspector!");
+            enabled = false;
+            return;
         }
+
+        canvasGroup = okButton.GetComponent<CanvasGroup>() ?? okButton.AddComponent<CanvasGroup>();
+        canvasGroup.alpha = 0f;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+        okButton.SetActive(false);
     }
 
     void Update()
     {
-        if (fishJourneyManager == null || okButton == null)
-            return;
+        if (fishJourneyManager == null) return;
 
         bool shouldShow = fishJourneyManager.IsWaitingForInput();
 
         if (shouldShow && !okButton.activeSelf)
         {
-            okButton.SetActive(true);
-            StartFade(1f);  // Fade in
+            ShowButton();
         }
         else if (!shouldShow && okButton.activeSelf)
         {
-            StartFade(0f);  // Fade out
+            HideButton();
         }
     }
 
     void LateUpdate()
     {
-        if (mainCamera == null)
-            return;
+        if (mainCam == null) return;
 
-        // Placer canvas 1.5 meter foran kameraet, og drej det mod kameraet
-        canvasTransform.position = mainCamera.transform.position + mainCamera.transform.forward * 1.5f;
-
-        // Sørg for canvas "kigger mod" kameraet (så det altid vender rigtigt)
-        canvasTransform.rotation = Quaternion.LookRotation(canvasTransform.position - mainCamera.transform.position);
+        t.position = mainCam.transform.position + mainCam.transform.forward * 1.5f;
+        t.rotation = Quaternion.LookRotation(t.position - mainCam.transform.position);
     }
 
-   public void OnOkButtonPressed()
-{
-    Debug.Log("Knappen blev trykket!");  // <--- Her ser vi om klik kommer igennem
-
-    if (fishJourneyManager != null)
+    public void OnOkButtonPressed()
     {
-        fishJourneyManager.ContinueJourney();
-    }
-}
-
-
-    void StartFade(float targetAlpha)
-    {
-        if (fadeCoroutine != null)
-            StopCoroutine(fadeCoroutine);
-
-        fadeCoroutine = StartCoroutine(FadeCanvasGroup(targetAlpha));
+        Debug.Log("FishJourneyUI: OK‑knap trykket");
+        if (fishJourneyManager != null)
+        {
+            fishJourneyManager.ContinueJourney();
+        }
+        else
+        {
+            Debug.LogWarning("FishJourneyUI: FishJourneyManager mangler!");
+        }
     }
 
-    IEnumerator FadeCanvasGroup(float targetAlpha)
+    void ShowButton()
     {
-        float startAlpha = canvasGroup.alpha;
+        okButton.SetActive(true);
+        StartFade(1f, true);
+    }
+
+    void HideButton()
+    {
+        StartFade(0f, false);
+    }
+
+    void StartFade(float targetAlpha, bool enableRaycast)
+    {
+        if (fadeRoutine != null) StopCoroutine(fadeRoutine);
+        fadeRoutine = StartCoroutine(FadeCanvas(targetAlpha, enableRaycast));
+    }
+
+    IEnumerator FadeCanvas(float targetAlpha, bool enableRaycast)
+    {
+        float start = canvasGroup.alpha;
         float elapsed = 0f;
 
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / fadeDuration);
+            canvasGroup.alpha = Mathf.Lerp(start, targetAlpha, elapsed / fadeDuration);
             yield return null;
         }
 
         canvasGroup.alpha = targetAlpha;
+        canvasGroup.interactable = enableRaycast;
+        canvasGroup.blocksRaycasts = enableRaycast;
 
-        if (targetAlpha == 1f)
-        {
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
-        }
-        else
-        {
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false;
+        if (targetAlpha == 0f)
             okButton.SetActive(false);
-        }
     }
 }

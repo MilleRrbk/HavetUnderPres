@@ -206,8 +206,12 @@ MonoBehaviour:
   rotationSpeed: 2
   stopDistance: 2.5
   introSpeechSource: {fileID: 209805802}
-  fishSources: []
-  nextButtonUI: {fileID: 0}
+  fishSources:
+  - {fileID: 271777415}
+  - {fileID: 987789988}
+  - {fileID: 305586544}
+  - {fileID: 76196378}
+  nextButtonUI: {fileID: 587036511}
   minHeight: 2
 --- !u!1 &76196377
 GameObject:
@@ -1745,7 +1749,7 @@ GameObject:
   m_Component:
   - component: {fileID: 539410841}
   - component: {fileID: 539410840}
-  - component: {fileID: 539410839}
+  - component: {fileID: 539410842}
   m_Layer: 0
   m_Name: TorbenTaleTrigger3
   m_TagString: Untagged
@@ -1753,20 +1757,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &539410839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539410838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94c19e4bb912d48d9b73597944030cc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSourceToPlay: {fileID: 305586544}
-  fishJourney: {fileID: 65469072}
 --- !u!65 &539410840
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1803,6 +1793,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &539410842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539410838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94c19e4bb912d48d9b73597944030cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishJourney: {fileID: 65469072}
 --- !u!1 &545329133
 GameObject:
   m_ObjectHideFlags: 0
@@ -1813,7 +1816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 545329136}
   - component: {fileID: 545329135}
-  - component: {fileID: 545329134}
+  - component: {fileID: 545329137}
   m_Layer: 0
   m_Name: TorbenTaleTrigger2
   m_TagString: Untagged
@@ -1821,20 +1824,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &545329134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 545329133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94c19e4bb912d48d9b73597944030cc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSourceToPlay: {fileID: 987789988}
-  fishJourney: {fileID: 65469072}
 --- !u!65 &545329135
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1871,6 +1860,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &545329137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545329133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94c19e4bb912d48d9b73597944030cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishJourney: {fileID: 65469072}
 --- !u!1001 &556400789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2635,7 +2637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 698379013}
   - component: {fileID: 698379012}
-  - component: {fileID: 698379011}
+  - component: {fileID: 698379014}
   m_Layer: 0
   m_Name: TorbenTaleTrigger1
   m_TagString: Untagged
@@ -2643,20 +2645,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &698379011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 698379010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94c19e4bb912d48d9b73597944030cc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSourceToPlay: {fileID: 271777415}
-  fishJourney: {fileID: 65469072}
 --- !u!65 &698379012
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2693,6 +2681,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &698379014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698379010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94c19e4bb912d48d9b73597944030cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishJourney: {fileID: 65469072}
 --- !u!1001 &745476941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3488,7 +3489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1285301103}
   - component: {fileID: 1285301102}
-  - component: {fileID: 1285301101}
+  - component: {fileID: 1285301104}
   m_Layer: 0
   m_Name: TorbenTaleTrigger4
   m_TagString: Untagged
@@ -3496,20 +3497,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1285301101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1285301100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94c19e4bb912d48d9b73597944030cc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSourceToPlay: {fileID: 76196378}
-  fishJourney: {fileID: 65469072}
 --- !u!65 &1285301102
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3546,6 +3533,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1285301104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285301100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94c19e4bb912d48d9b73597944030cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishJourney: {fileID: 65469072}
 --- !u!1 &1332267999
 GameObject:
   m_ObjectHideFlags: 0
