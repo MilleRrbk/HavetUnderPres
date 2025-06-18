@@ -3453,7 +3453,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSourceToPlay: {fileID: 76196378}
-  nextButtonUI: {fileID: 587036511}
+  nextButtonUI: {fileID: 0}
 --- !u!65 &1285301102
 BoxCollider:
   m_ObjectHideFlags: 0

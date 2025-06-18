@@ -1,11 +1,9 @@
-
 using UnityEngine;
-using System.Collections;
 
 public class SpeechTrigger : MonoBehaviour
 {
     public AudioSource audioSourceToPlay;
-    public GameObject nextButtonUI;
+    public FishJourneyManager fishJourney;  // Sørg for at tilføje denne i Inspector!
 
     private bool hasTriggered = false;
 
@@ -14,44 +12,14 @@ public class SpeechTrigger : MonoBehaviour
         if (hasTriggered || !other.CompareTag("Player")) return;
         hasTriggered = true;
 
-        StartCoroutine(PlayAndShow());
-    }
+        if (audioSourceToPlay) audioSourceToPlay.Play();
 
-    private IEnumerator PlayAndShow()
-    {
-        Debug.Log("▶ Triggered!");
+        // Fortæl fisken at den nu venter på input (så FishJourneyManager viser knappen senere)
+        if (fishJourney) fishJourney.SetWaitingForInput(true);
 
-        if (audioSourceToPlay && audioSourceToPlay.clip != null)
-        {
-            audioSourceToPlay.Play();
-            Debug.Log("▶ Playing: " + audioSourceToPlay.clip.name + ", duration: " + audioSourceToPlay.clip.length);
-
-            yield return new WaitUntil(() => audioSourceToPlay.isPlaying);
-            Debug.Log("🔊 Audio is now playing");
-
-            yield return new WaitUntil(() => !audioSourceToPlay.isPlaying);
-            Debug.Log("🛑 Audio finished");
-        }
-        else
-        {
-            Debug.LogWarning("⚠️ No AudioSource or clip set.");
-        }
-
-        if (nextButtonUI != null)
-        {
-            Debug.Log("✅ Showing next button!");
-            nextButtonUI.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning("⚠️ nextButtonUI is not assigned!");
-        }
+        gameObject.SetActive(false); // Deaktiver triggeren
     }
 }
-
-
-
-
 
 /*
 using UnityEngine;
