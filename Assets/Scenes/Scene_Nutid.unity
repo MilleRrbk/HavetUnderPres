@@ -3658,7 +3658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4276198514393432595, guid: def34caa7034948138595d1ec14334c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 127.8
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 4276198514393432595, guid: def34caa7034948138595d1ec14334c1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3666,7 +3666,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4276198514393432595, guid: def34caa7034948138595d1ec14334c1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.9
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 4276198514393432595, guid: def34caa7034948138595d1ec14334c1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3738,11 +3738,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6909581538795772466, guid: def34caa7034948138595d1ec14334c1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7003
+      value: -3247
       objectReference: {fileID: 0}
     - target: {fileID: 6909581538795772466, guid: def34caa7034948138595d1ec14334c1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 824
+      value: 881
       objectReference: {fileID: 0}
     - target: {fileID: 6909581538795772466, guid: def34caa7034948138595d1ec14334c1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3809,7 +3809,7 @@ MonoBehaviour:
   boat: {fileID: 866594360}
   startPosition: {x: 127.3, y: 17.39, z: -25.6}
   endPosition: {x: -142, y: 17.39, z: -25.6}
-  moveDuration: 25
+  moveDuration: 10
 --- !u!1 &866594363 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2880324965494844884, guid: def34caa7034948138595d1ec14334c1, type: 3}
