@@ -90,49 +90,60 @@ public class FishJourneyManager : MonoBehaviour
     // ─────────────────────────────────────────────────────────────
     //  HÅNDTER ANKOMST TIL WAYPOINT
     // ─────────────────────────────────────────────────────────────
-    IEnumerator HandleArrival()
+// ─────────────────────────────────────────────────────────────
+//  HÅNDTER ANKOMST TIL WAYPOINT
+// ─────────────────────────────────────────────────────────────
+IEnumerator HandleArrival()
+{
+    yield return new WaitForSeconds(0.5f);           // lille pause
+
+    // ── WAYPOINT 0: INTROTALEN ───────────────────────────────
+    if (currentIndex == 0 && introSpeechSource != null)
     {
-        yield return new WaitForSeconds(0.5f);  // lille pause
-
-        // WP 0 → afspil introtale
-        if (currentIndex == 0 && introSpeechSource != null)
-        {
-            introSpeechSource.Play();
-            yield return new WaitForSeconds(introSpeechSource.clip.length);
-        }
-        else
-        {
-            // Øvrige waypoints: vent 7 sek., afspil tale fra fishSources
-            yield return new WaitForSeconds(7f);
-            PlaySpeechForCurrentIndex();
-        }
-
-        // Vis knap
-        if (nextButtonUI != null)
-            nextButtonUI.SetActive(true);
-
-        waitingForInput = true;
+        introSpeechSource.Play();
+        // ➜ vent helt til lyden er færdig
+        yield return new WaitUntil(() => !introSpeechSource.isPlaying);
     }
+    // ── ØVRIGE WAYPOINTS ────────────────────────────────────
+    else
+    {
+        // evt. kort pause før talen starter
+        yield return new WaitForSeconds(0.5f);
+
+        // start tale
+        AudioSource src = PlaySpeechForCurrentIndex();
+
+        // ➜ vent til klippet stopper
+        if (src != null)                                      
+            yield return new WaitUntil(() => !src.isPlaying); 
+    }
+
+    // ── NU vises knappen ─────────────────────────────────────
+    if (nextButtonUI != null)
+        nextButtonUI.SetActive(true);
+
+    waitingForInput = true;
+}
+
 
     // ─────────────────────────────────────────────────────────────
     //  AFSPLIL KORREKT TALE PR. WAYPOINT (EFTER INTRO)
     // ─────────────────────────────────────────────────────────────
-    private void PlaySpeechForCurrentIndex()
+ // Ændr returtypen så vi kan få referencen
+private AudioSource PlaySpeechForCurrentIndex()
+{
+    foreach (AudioSource s in fishSources)            // stop alle andre
+        if (s) s.Stop();
+
+    int idx = currentIndex - 1;                       // fishSources starter ved wp 1
+    if (idx >= 0 && idx < fishSources.Length && fishSources[idx] != null)
     {
-        // Stop alle andre
-        foreach (AudioSource src in fishSources)
-            if (src) src.Stop();
-
-        // fishSources starter ved waypoint 1 → index = currentIndex-1
-        int audioIdx = currentIndex - 1;
-
-        if (audioIdx >= 0 &&
-            fishSources.Length > audioIdx &&
-            fishSources[audioIdx] != null)
-        {
-            fishSources[audioIdx].Play();
-        }
+        fishSources[idx].Play();
+        return fishSources[idx];                      // giver ref. tilbage
     }
+    return null;
+}
+
 
     // ─────────────────────────────────────────────────────────────
     //  UI-KNAP KALDER DENNE

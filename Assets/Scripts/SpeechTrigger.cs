@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SpeechTrigger : MonoBehaviour
 {
@@ -15,23 +16,32 @@ public class SpeechTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hasTriggered) return;
-
-        // Sørg for at XR Origin har tag "Player"
-        if (!other.CompareTag("Player")) return;
-
+        if (hasTriggered || !other.CompareTag("Player")) return;
         hasTriggered = true;
 
-        // Spil lyd
-        if (audioSourceToPlay) audioSourceToPlay.Play();
-
-        // Vis knap
-        if (nextButtonUI) nextButtonUI.SetActive(true);
-
-        // Fortæl fisken at den nu venter på input
-        if (fishJourney) fishJourney.SetWaitingForInput(true);
-
-        // Deaktiver triggeren så den ikke aktiveres igen
-        gameObject.SetActive(false);
+        // Start coroutine i stedet for direkte aktivering
+        StartCoroutine(PlayAndShow());
+        gameObject.SetActive(false);          // deaktiver triggeren
     }
+
+    private IEnumerator PlayAndShow()
+    {
+        if (audioSourceToPlay && audioSourceToPlay.clip != null)
+        {
+            audioSourceToPlay.Play();
+
+            // Wait until playback actually begins
+            yield return new WaitUntil(() => audioSourceToPlay.isPlaying);
+
+            // Then wait until playback ends
+            yield return new WaitUntil(() => !audioSourceToPlay.isPlaying);
+        }
+
+        if (nextButtonUI) nextButtonUI.SetActive(true);
+        if (fishJourney) fishJourney.SetWaitingForInput(true);
+    }
+
+
+
+    
 }
