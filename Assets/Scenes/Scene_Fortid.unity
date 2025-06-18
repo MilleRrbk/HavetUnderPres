@@ -27471,16 +27471,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 459189242303756518, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
       propertyPath: deadObjects.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 459189242303756518, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
       propertyPath: 'deadObjects.Array.data[4]'
       value: 
-      objectReference: {fileID: 1238723605}
+      objectReference: {fileID: 1238723607}
     - target: {fileID: 459189242303756518, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
       propertyPath: 'deadObjects.Array.data[5]'
       value: 
-      objectReference: {fileID: 1238723607}
+      objectReference: {fileID: 0}
     - target: {fileID: 459189242303756518, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
       propertyPath: 'deadObjects.Array.data[6]'
       value: 
@@ -27536,89 +27536,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 771672078502956143, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
+    - {fileID: 162196833538409548, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 162196833538409548, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1238723606}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
---- !u!1 &1238723605 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 162196833538409548, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
-  m_PrefabInstance: {fileID: 1238723604}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1238723606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1238723605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_InteractionManager: {fileID: 0}
-  m_Colliders: []
-  m_InteractionLayers:
-    m_Bits: 1
-  m_DistanceCalculationMode: 1
-  m_SelectMode: 0
-  m_FocusMode: 1
-  m_CustomReticle: {fileID: 0}
-  m_AllowGazeInteraction: 0
-  m_AllowGazeSelect: 0
-  m_OverrideGazeTimeToSelect: 0
-  m_GazeTimeToSelect: 0.5
-  m_OverrideTimeToAutoDeselectGaze: 0
-  m_TimeToAutoDeselectGaze: 3
-  m_AllowGazeAssistance: 0
-  m_FirstHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FirstSelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastSelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FirstFocusEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastFocusExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FocusEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FocusExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Activated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Deactivated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
-  m_StartingInteractionStrengthFilters: []
 --- !u!1 &1238723607 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1313931253596795677, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
