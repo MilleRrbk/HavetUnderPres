@@ -27470,6 +27470,26 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 459189242303756518, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
+      propertyPath: fadeCrabs
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 459189242303756518, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
+      propertyPath: netLiftSpeed
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 459189242303756518, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
+      propertyPath: crabMoveSpeed
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 459189242303756518, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
+      propertyPath: crabEscapeDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 459189242303756518, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
+      propertyPath: netDelayAfterCleared
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 459189242303756518, guid: 6815955af69df4d23ba70542b33ceb97, type: 3}
       propertyPath: deadObjects.Array.size
       value: 5
       objectReference: {fileID: 0}

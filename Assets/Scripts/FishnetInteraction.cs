@@ -1,112 +1,154 @@
-
-using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;        // til Editor-mus-test
 
 public class FishnetInteraction : MonoBehaviour
 {
-    public List<GameObject> deadObjects;
-    public List<GameObject> crabs;
-    public Transform fishnet;
-    public float crabMoveSpeed = 1f;
-    public float fadeDuration = 2f;
-    public float crabEscapeDistance = 5f;
+    // ────────── Inspector-felter ─────────────────────────────────
+    [Header("References")]
+    public List<GameObject> deadObjects;   // fisk/affald der klikkes væk
+    public List<GameObject> crabs;         // krabber som flygter
+    public Transform        fishnet;       // selve fiskenettet
 
-    private int deadClickedCount = 0;
+    [Header("Timing / Speed")]
+    public float crabMoveSpeed  = 0.5f;    // hvor hurtigt krabber løber
+    public float netLiftSpeed   = 0.3f;    // hvor hurtigt nettet stiger
+    public float fadeDuration   = 2f;      // hvor hurtigt krabber fader
+    public float crabEscapeDist = 6f;      // max afstand krabbe flytter sig
+    public float netTargetY     = 17.51f;  // slut-højde for nettet
+    public float netDelayAfterCleared = 3f; // tid fra alle fisk væk → net stiger
+
+    // ────────── intern tilstand ─────────────────────────────────
+    Camera cam;
+    int    deadClicked = 0;
+    bool   sequenceStarted = false;
+
+    // ────────── setup ───────────────────────────────────────────
     void Awake()
     {
-        XRInteractionManager manager = Object.FindFirstObjectByType<XRInteractionManager>();
+        cam = Camera.main;
+        XRInteractionManager mgr = FindAnyObjectByType<XRInteractionManager>();
 
-        foreach (var obj in deadObjects)
+        foreach (GameObject obj in deadObjects)
         {
-            var interactable = obj.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable>();
-            if (interactable != null)
-                interactable.interactionManager = manager;
-        }
-    }
-    void Start()
-    {
-        foreach (var obj in deadObjects)
-        {
-            AddClickHandler(obj);
+            var grab = obj.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>() ??
+                       obj.AddComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+
+            grab.interactionManager = mgr;
+            grab.selectEntered.AddListener(_ => OnDeadClicked(obj));
         }
     }
 
-    void AddClickHandler(GameObject obj)
+#if UNITY_EDITOR
+    // ────────── mus-klik til hurtig test i Editor ───────────────
+    void Update()
     {
-        var interactable = obj.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
-        if (interactable == null)
-            interactable = obj.AddComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
-
-        interactable.selectEntered.AddListener(_ => OnDeadObjectClicked(obj));
+        if (!sequenceStarted &&
+            Mouse.current?.leftButton.wasPressedThisFrame == true)
+        {
+            Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            if (Physics.Raycast(ray, out RaycastHit hit) &&
+                deadObjects.Contains(hit.transform.gameObject))
+            {
+                OnDeadClicked(hit.transform.gameObject);
+            }
+        }
     }
+#endif
 
-    void OnDeadObjectClicked(GameObject obj)
+    // ────────── håndter klik på “dødt” objekt ───────────────────
+    void OnDeadClicked(GameObject obj)
     {
+        if (!obj.activeSelf) return;
+
         obj.SetActive(false);
-        deadClickedCount++;
-        Debug.Log($"Klik: {deadClickedCount}/{deadObjects.Count}");
+        deadClicked++;
+        Debug.Log($"Klikket: {deadClicked}/{deadObjects.Count}");
 
-        if (deadClickedCount >= deadObjects.Count)
+        if (!sequenceStarted && deadClicked >= deadObjects.Count)
         {
-            Debug.Log("Alle døde klikket – starter coroutine");
-            StartCoroutine(FreeCrabsAndMoveNet());
+            sequenceStarted = true;
+            StartCoroutine(CrabSequence());          // bevæg/fade krabber
+            StartCoroutine(LiftNetAfterDelay());     // vent 1.3 s → løft net
         }
-    } 
+    }
 
-
-    IEnumerator FreeCrabsAndMoveNet()
+    // ────────── krabber flygter ─────────────────────────────────
+    IEnumerator CrabSequence()
     {
-        List<Vector3> targetPositions = new List<Vector3>();
-
-        foreach (var crab in crabs)
+        List<Vector3> targets = new List<Vector3>();
+        foreach (GameObject crab in crabs)
         {
-            Vector3 target = crab.transform.position + new Vector3(Random.Range(-crabEscapeDistance, crabEscapeDistance), 0, Random.Range(-crabEscapeDistance, crabEscapeDistance));
-            targetPositions.Add(target);
+            targets.Add(crab.transform.position +
+                        new Vector3(Random.Range(-crabEscapeDist,  crabEscapeDist),
+                                    0,
+                                    Random.Range(-crabEscapeDist,  crabEscapeDist)));
             StartCoroutine(FadeOut(crab));
         }
 
-        float t = 0;
-        while (t < 1)
+        float t = 0f;
+        while (t < 1f)
         {
             t += Time.deltaTime * crabMoveSpeed;
             for (int i = 0; i < crabs.Count; i++)
+                crabs[i].transform.position =
+                    Vector3.Lerp(crabs[i].transform.position, targets[i], t);
+
+            yield return null;
+        }
+    }
+
+    // ────────── løft net efter forsinkelse ──────────────────────
+    IEnumerator LiftNetAfterDelay()
+    {
+        yield return new WaitForSeconds(netDelayAfterCleared);
+
+        Vector3 startPos = fishnet.position;
+        Vector3 endPos   = new Vector3(startPos.x, netTargetY, startPos.z);
+
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * netLiftSpeed;
+            fishnet.position = Vector3.Lerp(startPos, endPos, t);
+            yield return null;
+        }
+    }
+
+    // ────────── fade-out helper ─────────────────────────────────
+    IEnumerator FadeOut(GameObject obj)
+    {
+        Renderer[] rends = obj.GetComponentsInChildren<Renderer>();
+        List<Material> mats = new List<Material>();
+
+        foreach (Renderer r in rends)
+        {
+            Material m = r.material;               // instans
+            if (!m.HasProperty("_Color")) continue;
+
+            m.SetFloat("_Surface", 1);             // Transparent
+            m.SetOverrideTag("RenderType", "Transparent");
+            m.SetInt("_SrcBlend",  (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            m.SetInt("_DstBlend",  (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            m.SetInt("_ZWrite",    0);
+            m.DisableKeyword("_ALPHATEST_ON");
+            m.EnableKeyword ("_ALPHABLEND_ON");
+            m.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+            mats.Add(m);
+        }
+
+        float t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            float a = Mathf.Lerp(1f, 0f, t / fadeDuration);
+            foreach (Material m in mats)
             {
-                crabs[i].transform.position = Vector3.Lerp(crabs[i].transform.position, targetPositions[i], t);
+                Color c = m.color; c.a = a; m.color = c;
             }
             yield return null;
         }
-
-        yield return new WaitForSeconds(fadeDuration);
-
-        // Move net upward
-        Vector3 netPosition = fishnet.position;
-        netPosition.y = 17.51f;
-        fishnet.position = netPosition;
-    }
-
-    IEnumerator FadeOut(GameObject obj)
-    {
-        Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
-        foreach (var r in renderers)
-        {
-            Material mat = r.material; // Use unique instance for fade
-            if (mat.HasProperty("_Color"))
-            {
-                Color c = mat.color;
-                for (float t = 0; t < fadeDuration; t += Time.deltaTime)
-                {
-                    c.a = Mathf.Lerp(1, 0, t / fadeDuration);
-                    mat.color = c;
-                    yield return null;
-                }
-                c.a = 0;
-                mat.color = c;
-            }
-        }
-
-        obj.SetActive(false);
     }
 }
-
