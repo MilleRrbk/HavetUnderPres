@@ -1,3 +1,59 @@
+
+using UnityEngine;
+using System.Collections;
+
+public class SpeechTrigger : MonoBehaviour
+{
+    public AudioSource audioSourceToPlay;
+    public GameObject nextButtonUI;
+
+    private bool hasTriggered = false;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (hasTriggered || !other.CompareTag("Player")) return;
+        hasTriggered = true;
+
+        StartCoroutine(PlayAndShow());
+    }
+
+    private IEnumerator PlayAndShow()
+    {
+        Debug.Log("▶ Triggered!");
+
+        if (audioSourceToPlay && audioSourceToPlay.clip != null)
+        {
+            audioSourceToPlay.Play();
+            Debug.Log("▶ Playing: " + audioSourceToPlay.clip.name + ", duration: " + audioSourceToPlay.clip.length);
+
+            yield return new WaitUntil(() => audioSourceToPlay.isPlaying);
+            Debug.Log("🔊 Audio is now playing");
+
+            yield return new WaitUntil(() => !audioSourceToPlay.isPlaying);
+            Debug.Log("🛑 Audio finished");
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ No AudioSource or clip set.");
+        }
+
+        if (nextButtonUI != null)
+        {
+            Debug.Log("✅ Showing next button!");
+            nextButtonUI.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ nextButtonUI is not assigned!");
+        }
+    }
+}
+
+
+
+
+
+/*
 using UnityEngine;
 using System.Collections;
 
@@ -24,6 +80,7 @@ public class SpeechTrigger : MonoBehaviour
         gameObject.SetActive(false);          // deaktiver triggeren
     }
 
+    
     private IEnumerator PlayAndShow()
     {
         if (audioSourceToPlay && audioSourceToPlay.clip != null)
@@ -43,5 +100,7 @@ public class SpeechTrigger : MonoBehaviour
 
 
 
+
     
 }
+*/

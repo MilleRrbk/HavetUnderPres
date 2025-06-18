@@ -1577,7 +1577,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSourceToPlay: {fileID: 305586544}
-  fishJourney: {fileID: 65469072}
   nextButtonUI: {fileID: 587036511}
 --- !u!65 &539410840
 BoxCollider:
@@ -1646,7 +1645,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSourceToPlay: {fileID: 987789988}
-  fishJourney: {fileID: 65469072}
   nextButtonUI: {fileID: 587036511}
 --- !u!65 &545329135
 BoxCollider:
@@ -1891,7 +1889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &587036512
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2407,7 +2405,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSourceToPlay: {fileID: 271777415}
-  fishJourney: {fileID: 65469072}
   nextButtonUI: {fileID: 587036511}
 --- !u!65 &698379012
 BoxCollider:
@@ -3137,7 +3134,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSourceToPlay: {fileID: 76196378}
-  fishJourney: {fileID: 65469072}
   nextButtonUI: {fileID: 587036511}
 --- !u!65 &1285301102
 BoxCollider:
@@ -3857,7 +3853,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6226694734089829650, guid: e8ffd0d7a5ab443a3a139a16e4ef5673, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 15071cdbaeff94cb6806735882d8d10d, type: 2}
     m_RemovedComponents: []
