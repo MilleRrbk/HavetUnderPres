@@ -3886,7 +3886,7 @@ MonoBehaviour:
   boat: {fileID: 866594360}
   startPosition: {x: 127.3, y: 17.39, z: -25.6}
   endPosition: {x: -142, y: 17.39, z: -25.6}
-  moveDuration: 10
+  moveDuration: 40
 --- !u!1 &866594363 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2880324965494844884, guid: def34caa7034948138595d1ec14334c1, type: 3}
