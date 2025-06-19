@@ -1280,13 +1280,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286855602}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0.009599217, y: 0, z: 0, w: 0.9999539}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 587036512}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -1.1, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1322,7 +1322,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4292799680
-  m_fontColor: {r: 0.75444996, g: 0.9245283, b: 0.8692016, a: 1}
+  m_fontColor: {r: 0.96862745, g: 0.96862745, b: 0.92156863, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1339,8 +1339,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 2
+  m_fontSizeBase: 2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1826,7 +1826,7 @@ Transform:
   m_GameObject: {fileID: 492796737}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.02, y: 0, z: 91.44}
+  m_LocalPosition: {x: -16.4, y: 0, z: 89.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1920,7 +1920,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4286704127
-  m_fontColor: {r: 1, g: 0.9145394, b: 0.504717, a: 1}
+  m_fontColor: {r: 1, g: 0.85490197, b: 0.5372549, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1937,8 +1937,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7
-  m_fontSizeBase: 7
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2005,7 +2005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.55}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &514858972
@@ -2139,8 +2139,25 @@ MonoBehaviour:
   audioSource: {fileID: 305586544}
   nextButton: {fileID: 587036511}
   subtitleController: {fileID: 273774534}
-  subtitleLines: []
-  durations: []
+  subtitleLines:
+  - "H\xF8rer du den brummen? \n"
+  - "Der kommer et k\xE6mpe skib med et bundtrawlnet, det skraber alt hen over bunden
+    \u2013 fisk, planter, stenrev. \n\n"
+  - "Naturen f\xE5r simpelthen ikke lov at gro op igen, f\xF8r det n\xE6ste skib
+    kommer. \nSe lige, hvordan sandet hvirvles op. Brutalt, ik' ?\n\n\n\n"
+  - "Forestil dig, at vi lader det forts\xE6tte: havet bliver m\xF8rkt, tomt og stille.\nHeldigvis
+    kan vi stadig n\xE5 at hj\xE6lpe!\n\n\n\n"
+  - "I dag pr\xF8ver man faktisk at passe bedre p\xE5 fiskene. Der findes noget,
+    der hedder fiskekvoter \u2013 det betyder alts\xE5, at der er gr\xE6nser for,
+    hvor mange fisk man m\xE5 fange. \n\n"
+  - "Det hj\xE6lper, men det virker kun, hvis reglerne bliver overholdt\n"
+  durations:
+  - 2
+  - 7
+  - 7
+  - 8
+  - 7
+  - 4
 --- !u!1 &545329133
 GameObject:
   m_ObjectHideFlags: 0
@@ -2211,17 +2228,16 @@ MonoBehaviour:
   nextButton: {fileID: 587036511}
   subtitleController: {fileID: 273774534}
   subtitleLines:
-  - "Org det tr\xE6ls - her ligger et tabt fiskenet p\xE5 bunden. Intet holder det
-    fast oppe i overfladen l\xE6ngere, men det fanger stadig fisk, som d\xF8r og
-    r\xE5dner hernede. "
+  - "Org det tr\xE6ls - her ligger et tabt fiskenet. Intet holder det fast oppe i
+    overfladen l\xE6ngere, men det fanger stadig fisk, som d\xF8r og r\xE5dner hernede. "
   - "Nettet stiger op til overfladen, n\xE5r det ikke er tungt af fisk - Men hvis
-    ingen fjerner det deroppe, vil nye fisk sidde fast  og s\xE5 synker det til bunds
-    igen. Derfor kalder vi det et sp\xF8gelsesnet. \n"
-  - "Hj\xE6lp mig: tryk p\xE5 de d\xF8de fisk, for at fjerne dem."
+    der er ingen der fjerner det deroppe, vil nye fisk sidde fast  og s\xE5 synker
+    det til bunds igen. Derfor kalder vi det et sp\xF8gelsesnet. \n"
+  - "Hj\xE6lp mig li' engang!\nTryk p\xE5 de d\xF8de fisk, for at fjerne dem."
   durations:
-  - 5
-  - 5
-  - 2
+  - 10
+  - 9
+  - 3
 --- !u!1001 &556400789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2534,8 +2550,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.06608224, g: 0.5188679, b: 0.07522042, a: 0.92941177}
-    m_PressedColor: {r: 0.5690637, g: 0.8679245, b: 0.7184942, a: 1}
+    m_HighlightedColor: {r: 0.3882353, g: 0.5882353, b: 0.44313726, a: 0.92941177}
+    m_PressedColor: {r: 0.3882353, g: 0.5882353, b: 0.44313726, a: 0.57254905}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2581,7 +2597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.05357778, g: 0.26415092, b: 0.18842243, a: 0.6313726}
+  m_Color: {r: 0.3882353, g: 0.5882353, b: 0.44313726, a: 0.6313726}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 3, y: 3, z: 3, w: 3}
   m_Maskable: 1
@@ -3058,10 +3074,10 @@ MonoBehaviour:
   - "Tr\xE6k nu i den fiskekrog d\xE9r. Vi driller lige fiskeren og sv\xF8mmer videre.\n"
   durations:
   - 4
-  - 4
-  - 4
-  - 4
-  - 4
+  - 5
+  - 5
+  - 5
+  - 5
   - 4
 --- !u!1001 &745476941
 PrefabInstance:
@@ -3917,8 +3933,22 @@ MonoBehaviour:
   audioSource: {fileID: 76196378}
   nextButton: {fileID: 587036511}
   subtitleController: {fileID: 273774534}
-  subtitleLines: []
-  durations: []
+  subtitleLines:
+  - "N\xE5r fiskekvoter overholdes, sp\xF8gelsesnet fjernes, og bundtrawl holdes
+    v\xE6k fra s\xE5rbare omr\xE5der, kommer livet hurtigt igen. \n"
+  - 'Se lyset, planterne, krabberne. Havet takker dig for din omtanke!
+
+'
+  - "Hvis du selv vil g\xF8re en forskel, s\xE5 kan du spise fisk der er fanget p\xE5
+    ansvarlig vis - og ellers s\xE5 fort\xE6ller du lig' dine for\xE6ldre at de skal
+    k\xF8be fisk med det b\xE6redygtige MSC m\xE6rke! \n\n"
+  - "Det kan g\xF8re en verden til forskel for det danske havmilj\xF8. \nTak fordi
+    du lyttede til min fort\xE6lling - vi ses i vandet! \n"
+  durations:
+  - 9
+  - 6
+  - 9
+  - 7
 --- !u!1 &1332267999
 GameObject:
   m_ObjectHideFlags: 0

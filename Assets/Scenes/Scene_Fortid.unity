@@ -17043,7 +17043,7 @@ MonoBehaviour:
   angularSpeedDeg: 10
   angleOffsetDeg: 0
   yOffset: 4
-  clockwise: 1
+  clockwise: 0
 --- !u!1 &770589882
 GameObject:
   m_ObjectHideFlags: 0
@@ -43057,7 +43057,7 @@ MonoBehaviour:
   angularSpeedDeg: 20
   angleOffsetDeg: 0
   yOffset: 0
-  clockwise: 1
+  clockwise: 0
 --- !u!1 &1861970694
 GameObject:
   m_ObjectHideFlags: 0
